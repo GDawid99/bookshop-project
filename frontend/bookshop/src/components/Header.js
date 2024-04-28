@@ -27,10 +27,12 @@ export const Header = () => {
                 <SearchIcon sx={{fontSize: {sm:"15px"}, color:"grey"}}></SearchIcon>
             </IconButton>
         </Search>
-        <Button sx={{ fontSize: "7px", color: 'white'}}>
-            <Typography sx={{fontSize: "10px", display:{xs:"none", sm:"block"}}}>Zaloguj się</Typography>
-            <LoginIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></LoginIcon>
-        </Button>
+        <Link to="/logowanie" style={{textDecoration:"none"}}>
+            <Button sx={{ fontSize: "7px", color: 'white'}}>
+                <Typography sx={{fontSize: "10px", display:{xs:"none", sm:"block"}}}>Zaloguj się</Typography>
+                <LoginIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></LoginIcon>
+            </Button>
+        </Link>
         <Link to="/rejestracja" style={{textDecoration:"none"}}>
             <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
                 Zarejestruj się
