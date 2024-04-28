@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/frontend/bookshop/node_modules
+/frontend/bookshop/.pnp
+/frontend/bookshop/.pnp.js
+
+# testing
+/frontend/bookshop/coverage
+
+# production
+/frontend/bookshop/build
+
+# misc
+/frontend/bookshop/.DS_Store
+/frontend/bookshop/.env.local
+/frontend/bookshop/.env.development.local
+/frontend/bookshop/.env.test.local
+/frontend/bookshop/.env.production.local
+
+/frontend/bookshop/npm-debug.log*
+/frontend/bookshop/yarn-debug.log*
+/frontend/bookshop/yarn-error.log*
+
+/.idea
+/api-gateway/target
+/bookservice/target
+/orderservice/target
+/userservice/target
