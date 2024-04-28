@@ -1,5 +1,5 @@
 import { AppBar, ThemeProvider, Container, CssBaseline, Toolbar, Typography, Paper, Stack, TextField, Button} from '@mui/material';
-import { themeOptions } from '../components/Home';
+import { themeOptions } from './Home';
 import { styled } from '@mui/material/styles';
 
 

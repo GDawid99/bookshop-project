@@ -1,10 +1,9 @@
-import  { Article } from './Article'
-import { Navigation } from './Navigation';
-import { Header } from './Header';
-import { createTheme, AppBar, ThemeProvider, Container, CssBaseline, Toolbar, Stack, styled, Paper, Typography } from '@mui/material';
-import { RecommendedPaper } from './RecommendedPaper';
-import { RecommendedBook } from './RecommendedBook';
+import  { Article } from '../components/Article'
+import { createTheme, ThemeProvider, Container, CssBaseline, Stack, Paper, Typography } from '@mui/material';
+import { RecommendedPaper } from '../components/RecommendedPaper';
+import { RecommendedBook } from '../components/RecommendedBook';
 import { useEffect, useState } from 'react';
+import { MainHeader } from '../components/MainHeader';
 
 
 
@@ -59,10 +58,7 @@ const article4 = {
   contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet laoreet enim. Nulla eget leo nec libero dapibus faucibus. In vel orci lacus. Mauris tellus tellus, sollicitudin tempus porttitor vel, tempus nec est. Cras suscipit, elit nec viverra lobortis, tellus urna ornare sem, a volutpat velit est in metus. Duis et ultrices neque, non rhoncus lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras gravida leo a sem aliquet, a pulvinar lorem malesuada. Pellentesque quis lorem urna. Nunc non magna est. Nunc consectetur in purus fringilla bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi fermentum felis id turpis finibus elementum non in orci. Cras commodo justo eros, porttitor imperdiet lectus consequat in."
 }
 
-const StyledToolBar = styled(Toolbar)({
-  display:"flex",
-  justifyContent:"space-between"
-});
+
 
 
 const Home = () => {
@@ -88,14 +84,7 @@ const Home = () => {
       
     <CssBaseline/>
     <Container>
-      <AppBar position="sticky">
-      <StyledToolBar>        
-          <Header/>
-        </StyledToolBar>
-        <StyledToolBar variant="dense" sx={{display: {xs: "none", md: "flex"}}}>        
-          <Navigation/>
-        </StyledToolBar>
-      </AppBar>
+      <MainHeader/>
       
       <Stack direction={{xs:"column", sm:"row"}}>
         <Stack direction="column" sx={{width: {xs:"100%", sm:"80%"}}}>
