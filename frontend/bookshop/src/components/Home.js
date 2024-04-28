@@ -49,6 +49,16 @@ const article2 = {
   contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet laoreet enim. Nulla eget leo nec libero dapibus faucibus. In vel orci lacus. Mauris tellus tellus, sollicitudin tempus porttitor vel, tempus nec est. Cras suscipit, elit nec viverra lobortis, tellus urna ornare sem, a volutpat velit est in metus. Duis et ultrices neque, non rhoncus lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras gravida leo a sem aliquet, a pulvinar lorem malesuada. Pellentesque quis lorem urna. Nunc non magna est. Nunc consectetur in purus fringilla bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi fermentum felis id turpis finibus elementum non in orci. Cras commodo justo eros, porttitor imperdiet lectus consequat in."
 }
 
+const article3 = {
+  title: "Nowa oferta",
+  contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet laoreet enim. Nulla eget leo nec libero dapibus faucibus. In vel orci lacus. Mauris tellus tellus, sollicitudin tempus porttitor vel, tempus nec est. Cras suscipit, elit nec viverra lobortis, tellus urna ornare sem, a volutpat velit est in metus. Duis et ultrices neque, non rhoncus lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras gravida leo a sem aliquet, a pulvinar lorem malesuada. Pellentesque quis lorem urna. Nunc non magna est. Nunc consectetur in purus fringilla bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi fermentum felis id turpis finibus elementum non in orci. Cras commodo justo eros, porttitor imperdiet lectus consequat in."
+}
+
+const article4 = {
+  title: "Okazja",
+  contents: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet laoreet enim. Nulla eget leo nec libero dapibus faucibus. In vel orci lacus. Mauris tellus tellus, sollicitudin tempus porttitor vel, tempus nec est. Cras suscipit, elit nec viverra lobortis, tellus urna ornare sem, a volutpat velit est in metus. Duis et ultrices neque, non rhoncus lectus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras gravida leo a sem aliquet, a pulvinar lorem malesuada. Pellentesque quis lorem urna. Nunc non magna est. Nunc consectetur in purus fringilla bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi fermentum felis id turpis finibus elementum non in orci. Cras commodo justo eros, porttitor imperdiet lectus consequat in."
+}
+
 const StyledToolBar = styled(Toolbar)({
   display:"flex",
   justifyContent:"space-between"
@@ -96,10 +106,10 @@ const Home = () => {
             <Article title={article2.title} contents={article2.contents} />
           </Paper>
           <Paper sx={{margin:"15px", padding:"10px"}}>
-            <Article title={article2.title} contents={article2.contents} />
+            <Article title={article3.title} contents={article2.contents} />
           </Paper>
           <Paper sx={{margin:"15px", padding:"10px"}}>
-            <Article title={article2.title} contents={article2.contents} />
+            <Article title={article4.title} contents={article2.contents} />
           </Paper>
           <Paper sx={{margin:"15px", padding:"10px"}}>
             <Article title={article2.title} contents={article2.contents} />
