@@ -23,8 +23,8 @@ public class BookService {
     AuthorRepository authorRepository;
 
 
-    public List<Book> findBooksByPage(long id, int size) {
-        return bookRepository.findAllBooks(PageRequest.of((int)id,size))
+    public List<Book> findBooksByPage(String title, long id, int size) {
+        return bookRepository.findByTitleContaining(title, PageRequest.of((int)id,size))
                 .stream()
                 .toList();
     }
