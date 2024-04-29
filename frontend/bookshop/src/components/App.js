@@ -7,13 +7,15 @@ import { Search } from '../pages/Search';
 
 
 const App = () => {
+
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<LogIn/>}/>
-        <Route path="/search" element={<Search listOfFoundBooks={["arr"]}/>}/>
+        <Route path={"/search"} element={<Search/>}/>
       </Routes>
       </BrowserRouter>
   );
