@@ -1,6 +1,8 @@
 import { Box, Button, Container, CssBaseline, Paper, Rating, Stack, ThemeProvider, Typography, styled } from "@mui/material"
 import { themeOptions } from "./Home"
 import { MainHeader } from "../components/MainHeader";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 
 
@@ -18,6 +20,32 @@ const PaperFoundBook = styled(Paper)({
 });
 
 export const Search = (props) => {
+
+    
+    const [book, setBook] = useState("");
+    
+    const foundBook= useSearchParams();
+
+    const title = foundBook[0].get('title');
+    const id = foundBook[0].get("id");
+    const size = foundBook[0].get("size");
+
+
+    const navigate = useNavigate();
+   
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/book/page?title=' + title + '&id=' + id + '&size=' + size)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setBook(data);
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+    }, []);
+
     return(
         <ThemeProvider theme={themeOptions}>
             <CssBaseline/>
@@ -30,18 +58,18 @@ export const Search = (props) => {
                             </PaperFilter>
                         </Box>
                         <Stack direction="column" sx={{width:{sm:"75%",xs:"100%"}}}>
-                            {props.listOfFoundBooks === undefined || props.listOfFoundBooks.length === 0 ?
+                            {book === undefined || book.length === 0 ?
                                 <Typography><br/>Nic nie znaleziono.</Typography>
-                                : props.listOfFoundBooks.map((el) => {
+                                : book.map((el) => {
                                     return <PaperFoundBook>
-                                        <Typography variant={props.title.length < 20 ? "h5" : "h6"} sx={{display: 'flex', justifyContent:"center", textAlign:"center"}}>{props.title}</Typography>
-                                        <img src={props.imageSrc} alt={props.title} style={{width:"100%"}}></img>
-                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Autor: {props.author}</Typography>
-                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Wydawnictwo: {props.publisher}</Typography>
+                                        <Typography variant={el.title.length < 20 ? "h5" : "h6"} sx={{display: 'flex', justifyContent:"center", textAlign:"center"}}>{el.title}</Typography>
+                                        <img src={el.imageSrc} alt={el.title} style={{width:"100%"}}></img>
+                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Autor: {el.author}</Typography>
+                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Wydawnictwo: {el.publisher}</Typography>
                                         <Typography variant="h6" display="inline" sx={{fontSize:"9px"}}>Cena: </Typography>
-                                        <Typography variant="h6" display="inline" sx={{fontSize:"9px", color:"purple"}}>{props.price} zł</Typography>
+                                        <Typography variant="h6" display="inline" sx={{fontSize:"9px", color:"purple"}}>{el.price} zł</Typography>
                                         <Typography>
-                                            <Rating value={props.rating/2} readOnly precision={0.5} size="small"></Rating>
+                                            <Rating value={el.rating/2} readOnly precision={0.5} size="small"></Rating>
                                         </Typography>
                                         <Typography>
                                             <Button variant="h5" display="flex" sx={{width: {xs:"20%", sm:"60%", md: "40%"}}}>SPRAWDŹ</Button>

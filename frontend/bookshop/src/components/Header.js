@@ -2,7 +2,8 @@ import { Typography, InputBase, Button, Box, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LoginIcon from '@mui/icons-material/Login';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 
 const Search = styled(Box)(({ theme }) => ({
@@ -18,17 +19,37 @@ const Search = styled(Box)(({ theme }) => ({
 
 export const Header = () => {
     
+    const textFromUrl = useSearchParams();
+    const [titleValue, setTitleValue] = useState(textFromUrl[0].get("title"));
+
     const navigate = useNavigate();
 
+    //let title = "P";
+    let id = 0;
+    let size = 2;
+
+    const changeTitle = (e) => {
+        setTitleValue(e.target.value);
+    }
+
+    const goToPosts = (title) => {
+        navigate({
+            pathname:'/search',
+            search:`title=${title}&id=${id}&size=${size}`
+        })
+        window.location.reload();
+    }
+
     const searchEvent = (e) => {
-        console.log("test");
+        console.log(titleValue.replaceAll(/[&%$+,/:;=?@]/g,''));
+        goToPosts(titleValue.replaceAll(/[&%$+,/:;=?@]/g,''));
     }
     
     return (
         <>
         <Typography variant='h6' sx={{textAlign:"center", fontSize: {xs: "10px", sm:"16px"}}}>Księgarnia</Typography>    
         <Search>
-            <InputBase  onKeyDown={(e) => { if (e.key === 'Enter') searchEvent()}} placeholder="Szukaj..." sx={{width:"100%"}}>
+            <InputBase value={titleValue} onChange={changeTitle}  onKeyDown={(e) => { if (e.key === 'Enter') searchEvent()}} placeholder="Szukaj..." sx={{width:"100%"}}>
             </InputBase>
             <IconButton onMouseDown={searchEvent} sx={{display:{xs:"none", sm:"block"}}}>
                 <SearchIcon sx={{fontSize: {sm:"15px"}, color:"grey"}}></SearchIcon>

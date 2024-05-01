@@ -17,6 +17,7 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/page")
     public List<Book> getBooksByPage(@RequestParam("title") String title, @RequestParam(name = "id") long id, @RequestParam(name="size") int size) {
         return bookService.findBooksByPage(title,id,size);
