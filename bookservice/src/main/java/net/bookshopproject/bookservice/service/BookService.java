@@ -23,10 +23,15 @@ public class BookService {
     AuthorRepository authorRepository;
 
 
-    public List<Book> findBooksByPage(String title, long id, int size) {
-        return bookRepository.findByTitleContaining(title, PageRequest.of((int)id,size))
+    public ResponseEntity<Object> findBooksByPage(String title, long id, int size) {
+        List<Book> bookList = bookRepository.findByTitleContaining(title, PageRequest.of((int)id,size))
                 .stream()
                 .toList();
+        List<BookDto> bookDtoList = new ArrayList<>();
+        for (Book b: bookList) {
+            bookDtoList.add(mapFromBookToDto(b));
+        }
+        return ResponseEntity.ok(bookDtoList);
     }
 
     public ResponseEntity<Object> findAllBooks() {

@@ -64,7 +64,7 @@ export const Search = (props) => {
                                     return <PaperFoundBook>
                                         <Typography variant={el.title.length < 20 ? "h5" : "h6"} sx={{display: 'flex', justifyContent:"center", textAlign:"center"}}>{el.title}</Typography>
                                         <img src={el.imageSrc} alt={el.title} style={{width:"100%"}}></img>
-                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Autor: {el.author}</Typography>
+                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Autor: {el.author.firstname + " " + el.author.lastname}</Typography>
                                         <Typography variant="h6" sx={{fontSize:"9px"}}>Wydawnictwo: {el.publisher}</Typography>
                                         <Typography variant="h6" display="inline" sx={{fontSize:"9px"}}>Cena: </Typography>
                                         <Typography variant="h6" display="inline" sx={{fontSize:"9px", color:"purple"}}>{el.price} zł</Typography>
