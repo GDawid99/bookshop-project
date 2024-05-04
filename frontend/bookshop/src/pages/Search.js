@@ -15,7 +15,7 @@ const PaperFilter = styled(Paper)({
 const PaperFoundBook = styled(Paper)({
     backgroundColor:"white",
     color:"black",
-    margin:"5px",
+    margin:"5px 30px",
     padding:"5px"
 });
 
@@ -35,7 +35,7 @@ export const Search = (props) => {
    
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/book/page?title=' + title + '&id=' + id + '&size=' + size)
+        if (title !== "") fetch('http://localhost:8080/api/book/page?title=' + title + '&id=' + id + '&size=' + size)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -62,18 +62,19 @@ export const Search = (props) => {
                                 <Typography><br/>Nic nie znaleziono.</Typography>
                                 : book.map((el) => {
                                     return <PaperFoundBook>
-                                        <Typography variant={el.title.length < 20 ? "h5" : "h6"} sx={{display: 'flex', justifyContent:"center", textAlign:"center"}}>{el.title}</Typography>
-                                        <img src={el.imageSrc} alt={el.title} style={{width:"100%"}}></img>
-                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Autor: {el.author.firstname + " " + el.author.lastname}</Typography>
-                                        <Typography variant="h6" sx={{fontSize:"9px"}}>Wydawnictwo: {el.publisher}</Typography>
-                                        <Typography variant="h6" display="inline" sx={{fontSize:"9px"}}>Cena: </Typography>
-                                        <Typography variant="h6" display="inline" sx={{fontSize:"9px", color:"purple"}}>{el.price} zł</Typography>
-                                        <Typography>
-                                            <Rating value={el.rating/2} readOnly precision={0.5} size="small"></Rating>
-                                        </Typography>
-                                        <Typography>
-                                            <Button variant="h5" display="flex" sx={{width: {xs:"20%", sm:"60%", md: "40%"}}}>SPRAWDŹ</Button>
-                                        </Typography>
+                                        <Stack direction={{xs:"column", sm:"row"}} sx={{width:"100%", justifyContent:"space-between"}}>
+                                            <Box sx={{width:{xs:"100%" ,sm:"70%"}, maxWidth:{xs:"100%" ,sm:"70%"}}}>
+                                                <Typography align="center" sx={{fontSize:{xs:"20px",sm:"30px", md:"35px", lg:"40px", xl:"50px"}}}>{el.title}</Typography>
+                                                <Typography align="left" sx={{fontSize:{xs:"9px", sm:"14px",md:"20px", lg:"28px", xl:"40px"}}}>Autor: {el.author.firstname + " " + el.author.lastname}</Typography>
+                                                <Typography align="left" sx={{fontSize:{xs:"9px", sm:"14px",md:"20px", lg:"28px", xl:"40px"}}}>Wydawnictwo: {el.publisher}</Typography>
+                                                <Typography align="left" display="inline" sx={{fontSize:{xs:"9px", sm:"14px",md:"20px", lg:"28px", xl:"40px"}}}>Cena: </Typography>
+                                                <Typography align="left" display="inline" sx={{fontSize:{xs:"9px", sm:"14px",md:"20px", lg:"28px", xl:"40px"}, color:"purple"}}>{el.price} zł</Typography>
+                                                <Typography>
+                                                    <Rating value={el.rating/2} readOnly precision={0.5} sx={{fontSize:{xs:"15px", md:"27px", xl:"40px"}}}></Rating>
+                                                </Typography>
+                                            </Box>
+                                            <img className="bookImage" src={`/images/${el.imageUrl}`} alt={el.title}></img>
+                                        </Stack>
                                     </PaperFoundBook>;
                                 })
                             }

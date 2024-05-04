@@ -1,0 +1,14 @@
+.bookImage {
+    padding: 20px;
+    width: 30%;
+    height: auto; 
+    justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .bookImage {
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
