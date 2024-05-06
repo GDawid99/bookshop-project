@@ -3,6 +3,7 @@ import { themeOptions } from "./Home"
 import { MainHeader } from "../components/MainHeader";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Filter } from "../components/Filter";
 
 
 
@@ -24,12 +25,17 @@ export const Search = (props) => {
     
     const [book, setBook] = useState("");
     
-    const foundBook= useSearchParams();
+    const [params]= useSearchParams();
 
-    const title = foundBook[0].get('title');
-    const id = foundBook[0].get("id");
-    const size = foundBook[0].get("size");
-
+    const title = params.get('title') || "";
+    const id = params.get("id");
+    const size = params.get("size");
+    const priceFrom = parseFloat(params.get('priceFrom')) || 0;
+    const priceTo = parseFloat(params.get('priceTo')) || Number.MAX_VALUE;
+    const publisher = params.getAll('publisher');
+    const rate = params.get('rate');
+    const genre = params.getAll('genre');
+    
 
     const navigate = useNavigate();
    
@@ -46,6 +52,7 @@ export const Search = (props) => {
         });
     }, []);
 
+
     return(
         <ThemeProvider theme={themeOptions}>
             <CssBaseline/>
@@ -54,13 +61,20 @@ export const Search = (props) => {
                     <Stack direction="row" sx={{width:"100%"}}>
                         <Box sx={{width:"25%", display:{xs:"none", sm:"block"}}}>
                             <PaperFilter>
-                                dsa
+                                
+                                <Filter book={book}/>
                             </PaperFilter>
                         </Box>
                         <Stack direction="column" sx={{width:{sm:"75%",xs:"100%"}}}>
                             {book === undefined || book.length === 0 ?
                                 <Typography><br/>Nic nie znaleziono.</Typography>
-                                : book.map((el) => {
+                                : book.filter((el) => {
+                                    return (parseFloat(el.price) >= priceFrom && parseFloat(el.price) <= priceTo);
+                                }).filter((el) => {
+                                    return publisher.length !== 0 ? publisher.includes(el.publisher) : true;
+                                }).filter((el) => {
+                                    return genre.length !== 0 ? genre.includes(el.genre) : true;
+                                }).map((el) => {
                                     return <PaperFoundBook>
                                         <Stack direction={{xs:"column", sm:"row"}} sx={{width:"100%", justifyContent:"space-between"}}>
                                             <Box sx={{width:{xs:"100%" ,sm:"70%"}, maxWidth:{xs:"100%" ,sm:"70%"}}}>
