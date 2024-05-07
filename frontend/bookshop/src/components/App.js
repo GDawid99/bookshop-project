@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import { LogIn } from '../pages/LogIn';
 import { Search } from '../pages/Search';
 import { useState } from 'react';
+import { BookPage } from '../pages/BookPage';
 
 
 
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<LogIn/>}/>
         <Route path={"/search"} element={<Search phrase={param}/>}/>
+        <Route path="offer" element={<BookPage/>}/>
       </Routes>
       </BrowserRouter>
   );
