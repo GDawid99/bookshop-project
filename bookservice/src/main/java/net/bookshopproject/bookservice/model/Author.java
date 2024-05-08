@@ -1,7 +1,5 @@
 package net.bookshopproject.bookservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +18,6 @@ public class Author {
     @GeneratedValue
     private Long author_id;
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JsonIgnore
     private List<Book> bookList;
     private String firstname;
     private String lastname;

@@ -1,9 +1,9 @@
 package net.bookshopproject.bookservice.controller;
 
 import net.bookshopproject.bookservice.dto.AuthorDto;
-import net.bookshopproject.bookservice.model.Author;
 import net.bookshopproject.bookservice.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,17 +14,24 @@ public class AuthorController {
     AuthorService authorService;
 
     @PostMapping("/add")
-    public Author createNewAuthor(@RequestBody AuthorDto authorDto) {
-        return authorService.addNewAuthor(authorDto);
+    public ResponseEntity<AuthorDto> createNewAuthor(@RequestBody AuthorDto authorDto) {
+        return ResponseEntity.ok(authorService.addNewAuthor(authorDto));
     }
 
+
     @DeleteMapping("/remove/{id}")
-    public String deleteAuthorById(@PathVariable long id) {
-        return authorService.deleteAuthorById(id);
+    public ResponseEntity<String> deleteAuthorById(@PathVariable long id) {
+        return ResponseEntity.ok(authorService.deleteAuthorById(id));
     }
 
     @PutMapping("/update/{id}")
-    public Author updateAuthorById(@RequestBody AuthorDto authorDto, @PathVariable long id) {
-        return authorService.updateAuthorById(id,authorDto);
+    public ResponseEntity<AuthorDto> updateAuthorById(@RequestBody AuthorDto authorDto, @PathVariable long id) {
+        AuthorDto tmpAuthorDto;
+        try {
+            tmpAuthorDto = authorService.updateAuthorById(id, authorDto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(tmpAuthorDto);
     }
 }

@@ -13,41 +13,59 @@ public class AuthorService {
     @Autowired
     AuthorRepository authorRepository;
 
-    public Author addNewAuthor(AuthorDto authorDto) {
+    public AuthorDto addNewAuthor(AuthorDto authorDto) {
         Author author = mapFromDtoToAuthor(authorDto);
-        return authorRepository.save(author);
+        return mapFromAuthorToDto(authorRepository.save(author));
     }
 
     public Author findAuthorById(long id) {
         return authorRepository.findById(id).orElseThrow();
     }
 
-    public Author updateAuthorById(long id, AuthorDto authorDto) {
+    public AuthorDto updateAuthorById(long id, AuthorDto authorDto) {
         Author author = mapFromDtoToAuthor(authorDto);
-        Author oldAuthor = authorRepository.getReferenceById(id);
+        Author oldAuthor = authorRepository.findById(id).orElseThrow();
         return authorRepository.findById(id).map((newAuthor) -> {
             newAuthor.setFirstname(Optional.ofNullable(author.getFirstname()).orElse(oldAuthor.getFirstname()));
             newAuthor.setLastname(Optional.ofNullable(author.getLastname()).orElse(oldAuthor.getLastname()));
             newAuthor.setBookList(Optional.ofNullable(author.getBookList()).orElse(oldAuthor.getBookList()));
             newAuthor.setRating(Optional.ofNullable(author.getRating()).orElse(oldAuthor.getRating()));
-            return authorRepository.save(newAuthor);
+            return mapFromAuthorToDto(authorRepository.save(newAuthor));
         }).orElseGet(() -> {
             author.setAuthor_id(id);
-            return authorRepository.save(author);
+            return mapFromAuthorToDto(authorRepository.save(author));
         });
     }
 
     public String deleteAuthorById(long id) {
-        authorRepository.deleteById(id);
-        return "Autor " + id + " został usunięty.";
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isEmpty()) {
+            return "Autor " + id + " nie został usunięty. Powód: brak autora o podanym id";
+        }
+        else if (author.get().getBookList().isEmpty()) {
+            authorRepository.deleteById(id);
+            return "Autor " + id + " został usunięty.";
+        }
+        else return "Autor " + id + " nie został usunięty. Powód: powiązanie z inną tabelą bądź inne.";
     }
 
     private Author mapFromDtoToAuthor(AuthorDto authorDto) {
         Author author = new Author();
+        author.setAuthor_id(authorDto.getAuthor_id());
         author.setFirstname(authorDto.getFirstname());
         author.setLastname(authorDto.getLastname());
         author.setRating(authorDto.getRating());
         author.setBookList(authorDto.getBookList());
         return author;
+    }
+
+    private AuthorDto mapFromAuthorToDto(Author author) {
+        AuthorDto authorDto = new AuthorDto();
+        authorDto.setAuthor_id(author.getAuthor_id());
+        authorDto.setFirstname(author.getFirstname());
+        authorDto.setLastname(author.getLastname());
+        authorDto.setRating(author.getRating());
+        authorDto.setBookList(author.getBookList());
+        return authorDto;
     }
 }
