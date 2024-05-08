@@ -20,9 +20,8 @@ public class Book {
     @GeneratedValue
     private Long book_id;
     private String title;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="author_id")
-    @JsonBackReference
     private Author author;
     private String publisher;
     private Date dateOfPublication;

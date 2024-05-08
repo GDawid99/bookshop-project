@@ -19,8 +19,8 @@ public class BookController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/page")
-    public ResponseEntity<Object> getBooksByPage(@RequestParam("title") String title, @RequestParam(name = "id") long id, @RequestParam(name="size") int size) {
-        return bookService.findBooksByPage(title,id,size);
+    public ResponseEntity<List<BookDto>> getBooksByPage(@RequestParam("title") String title, @RequestParam(name = "id") long id, @RequestParam(name="size") int size) {
+        return ResponseEntity.ok(bookService.findBooksByPage(title,id,size));
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

@@ -17,7 +17,7 @@ public class Author {
     @Id
     @GeneratedValue
     private Long author_id;
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Book> bookList;
     private String firstname;
     private String lastname;

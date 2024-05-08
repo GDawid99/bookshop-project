@@ -9,7 +9,7 @@ import java.sql.Date;
 public class BookDto {
     private Long book_id;
     private String title;
-    private Author author;
+    private AuthorDto author;
     private String publisher;
     private Date dateOfPublication;
     private String genre;

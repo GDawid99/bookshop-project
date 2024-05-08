@@ -49,23 +49,23 @@ public class AuthorService {
         else return "Autor " + id + " nie został usunięty. Powód: powiązanie z inną tabelą bądź inne.";
     }
 
-    private Author mapFromDtoToAuthor(AuthorDto authorDto) {
+    public static Author mapFromDtoToAuthor(AuthorDto authorDto) {
         Author author = new Author();
         author.setAuthor_id(authorDto.getAuthor_id());
         author.setFirstname(authorDto.getFirstname());
         author.setLastname(authorDto.getLastname());
         author.setRating(authorDto.getRating());
-        author.setBookList(authorDto.getBookList());
+        //author.setBookList(authorDto.getBookList());
         return author;
     }
 
-    private AuthorDto mapFromAuthorToDto(Author author) {
+    public static AuthorDto mapFromAuthorToDto(Author author) {
         AuthorDto authorDto = new AuthorDto();
         authorDto.setAuthor_id(author.getAuthor_id());
         authorDto.setFirstname(author.getFirstname());
         authorDto.setLastname(author.getLastname());
         authorDto.setRating(author.getRating());
-        authorDto.setBookList(author.getBookList());
+        //authorDto.setBookList(author.getBookList());
         return authorDto;
     }
 }

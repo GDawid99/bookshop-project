@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class AuthorDto {
     private Long author_id;
-    private List<Book> bookList;
+    private List<BookDto> bookList;
     private String firstname;
     private String lastname;
     private Integer rating;

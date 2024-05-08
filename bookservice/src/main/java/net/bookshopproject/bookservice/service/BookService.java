@@ -23,7 +23,7 @@ public class BookService {
     AuthorRepository authorRepository;
 
 
-    public ResponseEntity<Object> findBooksByPage(String title, long id, int size) {
+    public List<BookDto> findBooksByPage(String title, long id, int size) {
         List<Book> bookList = bookRepository.findByTitleContaining(title, PageRequest.of((int)id,size))
                 .stream()
                 .toList();
@@ -31,7 +31,7 @@ public class BookService {
         for (Book b: bookList) {
             bookDtoList.add(mapFromBookToDto(b));
         }
-        return ResponseEntity.ok(bookDtoList);
+        return bookDtoList;
     }
 
     public ResponseEntity<Object> findAllBooks() {
@@ -97,7 +97,7 @@ public class BookService {
     private Book mapFromDtoToBook(BookDto bookDto) {
         Book book = new Book();
         book.setTitle(bookDto.getTitle());
-        book.setAuthor(bookDto.getAuthor());
+        book.setAuthor(AuthorService.mapFromDtoToAuthor(bookDto.getAuthor()));
         book.setPublisher(bookDto.getPublisher());
         book.setDateOfPublication(bookDto.getDateOfPublication());
         book.setGenre(bookDto.getGenre());
@@ -112,7 +112,7 @@ public class BookService {
         BookDto bookDto = new BookDto();
         bookDto.setBook_id(book.getBook_id());
         bookDto.setTitle(book.getTitle());
-        bookDto.setAuthor(book.getAuthor());
+        bookDto.setAuthor(AuthorService.mapFromAuthorToDto(book.getAuthor()));
         bookDto.setPublisher(book.getPublisher());
         bookDto.setDateOfPublication(book.getDateOfPublication());
         bookDto.setGenre(book.getGenre());
@@ -122,4 +122,5 @@ public class BookService {
         bookDto.setImageUrl(book.getImageUrl());
         return bookDto;
     }
+
 }
