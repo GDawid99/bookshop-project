@@ -42,7 +42,6 @@ public class Mapper {
         author.setFirstname(authorDto.getFirstname());
         author.setLastname(authorDto.getLastname());
         author.setRating(authorDto.getRating());
-        //author.setBookList(authorDto.getBookList());
         return author;
     }
 
@@ -52,7 +51,6 @@ public class Mapper {
         authorDto.setFirstname(author.getFirstname());
         authorDto.setLastname(author.getLastname());
         authorDto.setRating(author.getRating());
-        //authorDto.setBookList(author.getBookList());
         return authorDto;
     }
 }

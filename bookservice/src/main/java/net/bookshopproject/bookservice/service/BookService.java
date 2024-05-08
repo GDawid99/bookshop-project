@@ -16,13 +16,10 @@ import java.util.*;
 
 @Service
 public class BookService {
-
     @Autowired
     BookRepository bookRepository;
-
     @Autowired
     AuthorRepository authorRepository;
-
 
     public List<BookDto> findBooksByPage(String title, long id, int size) {
         List<Book> bookList = bookRepository.findByTitleContaining(title, PageRequest.of((int)id,size))
@@ -35,47 +32,49 @@ public class BookService {
         return bookDtoList;
     }
 
-    public ResponseEntity<Object> findAllBooks() {
+    public List<BookDto> findAllBooks() {
         List<Book> bookList = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
         for (Book b: bookList) {
             bookDtoList.add(Mapper.mapFromBookToDto(b));
         }
-
-        return ResponseEntity.ok(bookDtoList);
+        return bookDtoList;
     }
 
-    public ResponseEntity<Object> findThreeRandomBooks() {
+    public List<BookDto> findThreeRandomBooks() {
         List<Book> books = bookRepository.findAll();
         Collections.shuffle(books);
-        List<BookDto> randomBooklist = Arrays.asList(Mapper.mapFromBookToDto(books.get(0)), Mapper.mapFromBookToDto(books.get(1)), Mapper.mapFromBookToDto(books.get(2)));
-        return ResponseEntity.ok(randomBooklist);
+        return Arrays.asList(
+                Mapper.mapFromBookToDto(books.get(0)),
+                Mapper.mapFromBookToDto(books.get(1)),
+                Mapper.mapFromBookToDto(books.get(2))
+        );
     }
 
-    public ResponseEntity<Object> findBookByTitle(String title, long author_id) {
+    public BookDto findBookByTitle(String title, long author_id) {
         Author author = authorRepository.getReferenceById(author_id);
         Book book = bookRepository.findByTitle(title).orElseThrow();
         if (!Objects.equals(author.getAuthor_id(), book.getAuthor().getAuthor_id())) {
             throw new IllegalStateException("Rozne id");
         }
-        BookDto bookDto = Mapper.mapFromBookToDto(book);
-        return ResponseEntity.ok(book);
+        return Mapper.mapFromBookToDto(book);
     }
 
-    public Book createNewBook(BookDto bookDto, long author_id) {
+    public BookDto createNewBook(BookDto bookDto, long author_id) {
         Author author = authorRepository.findById(author_id).orElseThrow();
-
+        bookDto.setAuthor(Mapper.mapFromAuthorToDto(author));
         Book book = Mapper.mapFromDtoToBook(bookDto);
-        book.setAuthor(author);
-
-        return bookRepository.save(book);
+        return Mapper.mapFromBookToDto(bookRepository.save(book));
     }
 
-    public void deleteBookById(long id) {
+    public String deleteBookById(long id) {
         bookRepository.deleteById(id);
+        return "Książka " + id + " została usunięta.";
     }
 
-    public Book updateBookById(long id, BookDto bookDto) {
+    public BookDto updateBookById(long id, BookDto bookDto) {
+        Author author = bookRepository.getReferenceById(id).getAuthor();
+        bookDto.setAuthor(Mapper.mapFromAuthorToDto(author));
         Book book = Mapper.mapFromDtoToBook(bookDto);
         Book oldBook = bookRepository.getReferenceById(id);
         return bookRepository.findById(id).map((newBook) -> {
@@ -88,10 +87,10 @@ public class BookService {
             newBook.setQuantity(Optional.ofNullable(book.getQuantity()).orElse(oldBook.getQuantity()));
             newBook.setRating(Optional.ofNullable(book.getRating()).orElse(oldBook.getRating()));
             newBook.setImageUrl(Optional.ofNullable(book.getImageUrl()).orElse(oldBook.getImageUrl()));
-            return bookRepository.save(newBook);
+            return Mapper.mapFromBookToDto(bookRepository.save(newBook));
         }).orElseGet(() -> {
             book.setBook_id(id);
-            return bookRepository.save(book);
+            return Mapper.mapFromBookToDto(bookRepository.save(book));
         });
     }
 }

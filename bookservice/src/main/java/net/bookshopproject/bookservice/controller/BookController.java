@@ -25,35 +25,34 @@ public class BookController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping()
-    public ResponseEntity<Object> getAllBooks() {
-        return bookService.findAllBooks();
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+        return ResponseEntity.ok(bookService.findAllBooks());
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{title}/{id}")
-    public ResponseEntity<Object> getBookByTitle(@PathVariable String title, @PathVariable long id) {
-        return bookService.findBookByTitle(title,id);
+    public ResponseEntity<BookDto> getBookByTitle(@PathVariable String title, @PathVariable long id) {
+        return ResponseEntity.ok(bookService.findBookByTitle(title,id));
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/random")
-    public ResponseEntity<Object> getThreeRandomBooks() {
-        return bookService.findThreeRandomBooks();
+    public ResponseEntity<List<BookDto>> getThreeRandomBooks() {
+        return ResponseEntity.ok(bookService.findThreeRandomBooks());
     }
 
     @PostMapping("/add/{author_id}")
-    public Book createNewBook(@RequestBody BookDto bookDto, @PathVariable long author_id) {
-        return bookService.createNewBook(bookDto,author_id);
+    public ResponseEntity<BookDto> createNewBook(@RequestBody BookDto bookDto, @PathVariable long author_id) {
+        return ResponseEntity.ok(bookService.createNewBook(bookDto,author_id));
     }
 
     @PutMapping("/update/{id}")
-    public Book updateBookById(@RequestBody BookDto bookDto, @PathVariable long id) {
-        return bookService.updateBookById(id, bookDto);
+    public ResponseEntity<BookDto> updateBookById(@RequestBody BookDto bookDto, @PathVariable long id) {
+        return ResponseEntity.ok(bookService.updateBookById(id, bookDto));
     }
 
     @DeleteMapping("/remove/{id}")
-    public String deleteBookById(@PathVariable long id) {
-        bookService.deleteBookById(id);
-        return "Książka " + id + " została usunięta.";
+    public ResponseEntity<String> deleteBookById(@PathVariable long id) {
+        return ResponseEntity.ok(bookService.deleteBookById(id));
     }
 }
