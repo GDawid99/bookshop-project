@@ -1,6 +1,7 @@
 package net.bookshopproject.bookservice.service;
 
 import net.bookshopproject.bookservice.dto.BookDto;
+import net.bookshopproject.bookservice.mapper.Mapper;
 import net.bookshopproject.bookservice.model.Author;
 import net.bookshopproject.bookservice.model.Book;
 import net.bookshopproject.bookservice.repository.AuthorRepository;
@@ -29,7 +30,7 @@ public class BookService {
                 .toList();
         List<BookDto> bookDtoList = new ArrayList<>();
         for (Book b: bookList) {
-            bookDtoList.add(mapFromBookToDto(b));
+            bookDtoList.add(Mapper.mapFromBookToDto(b));
         }
         return bookDtoList;
     }
@@ -38,7 +39,7 @@ public class BookService {
         List<Book> bookList = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
         for (Book b: bookList) {
-            bookDtoList.add(mapFromBookToDto(b));
+            bookDtoList.add(Mapper.mapFromBookToDto(b));
         }
 
         return ResponseEntity.ok(bookDtoList);
@@ -47,7 +48,7 @@ public class BookService {
     public ResponseEntity<Object> findThreeRandomBooks() {
         List<Book> books = bookRepository.findAll();
         Collections.shuffle(books);
-        List<BookDto> randomBooklist = Arrays.asList(mapFromBookToDto(books.get(0)), mapFromBookToDto(books.get(1)), mapFromBookToDto(books.get(2)));
+        List<BookDto> randomBooklist = Arrays.asList(Mapper.mapFromBookToDto(books.get(0)), Mapper.mapFromBookToDto(books.get(1)), Mapper.mapFromBookToDto(books.get(2)));
         return ResponseEntity.ok(randomBooklist);
     }
 
@@ -57,14 +58,14 @@ public class BookService {
         if (!Objects.equals(author.getAuthor_id(), book.getAuthor().getAuthor_id())) {
             throw new IllegalStateException("Rozne id");
         }
-        BookDto bookDto = mapFromBookToDto(book);
+        BookDto bookDto = Mapper.mapFromBookToDto(book);
         return ResponseEntity.ok(book);
     }
 
     public Book createNewBook(BookDto bookDto, long author_id) {
         Author author = authorRepository.findById(author_id).orElseThrow();
 
-        Book book = mapFromDtoToBook(bookDto);
+        Book book = Mapper.mapFromDtoToBook(bookDto);
         book.setAuthor(author);
 
         return bookRepository.save(book);
@@ -75,7 +76,7 @@ public class BookService {
     }
 
     public Book updateBookById(long id, BookDto bookDto) {
-        Book book = mapFromDtoToBook(bookDto);
+        Book book = Mapper.mapFromDtoToBook(bookDto);
         Book oldBook = bookRepository.getReferenceById(id);
         return bookRepository.findById(id).map((newBook) -> {
             newBook.setTitle(Optional.ofNullable(book.getTitle()).orElse(oldBook.getTitle()));
@@ -93,34 +94,4 @@ public class BookService {
             return bookRepository.save(book);
         });
     }
-
-    private Book mapFromDtoToBook(BookDto bookDto) {
-        Book book = new Book();
-        book.setTitle(bookDto.getTitle());
-        book.setAuthor(AuthorService.mapFromDtoToAuthor(bookDto.getAuthor()));
-        book.setPublisher(bookDto.getPublisher());
-        book.setDateOfPublication(bookDto.getDateOfPublication());
-        book.setGenre(bookDto.getGenre());
-        book.setPrice(bookDto.getPrice());
-        book.setQuantity(bookDto.getQuantity());
-        book.setRating(bookDto.getRating());
-        book.setImageUrl(bookDto.getImageUrl());
-        return book;
-    }
-
-    private BookDto mapFromBookToDto(Book book) {
-        BookDto bookDto = new BookDto();
-        bookDto.setBook_id(book.getBook_id());
-        bookDto.setTitle(book.getTitle());
-        bookDto.setAuthor(AuthorService.mapFromAuthorToDto(book.getAuthor()));
-        bookDto.setPublisher(book.getPublisher());
-        bookDto.setDateOfPublication(book.getDateOfPublication());
-        bookDto.setGenre(book.getGenre());
-        bookDto.setPrice(book.getPrice());
-        bookDto.setQuantity(book.getQuantity());
-        bookDto.setRating(book.getRating());
-        bookDto.setImageUrl(book.getImageUrl());
-        return bookDto;
-    }
-
 }
