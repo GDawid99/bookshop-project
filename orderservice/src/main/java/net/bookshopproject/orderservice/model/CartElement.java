@@ -1,9 +1,6 @@
 package net.bookshopproject.orderservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +16,9 @@ public class CartElement {
     @Id
     @GeneratedValue
     private long cartElement_id;
-    private long cart_id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
     private long book_id;
     private int quantity;
 }

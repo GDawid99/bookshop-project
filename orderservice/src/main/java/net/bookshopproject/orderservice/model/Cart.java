@@ -1,15 +1,13 @@
 package net.bookshopproject.orderservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +20,7 @@ public class Cart {
     @GeneratedValue
     private long cart_id;
     private long user_id;
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private List<CartElement> cartElementList;
     private Date date;
 }
