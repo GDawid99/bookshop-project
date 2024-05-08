@@ -43,12 +43,24 @@ public class BookController {
 
     @PostMapping("/add/{author_id}")
     public ResponseEntity<BookDto> createNewBook(@RequestBody BookDto bookDto, @PathVariable long author_id) {
-        return ResponseEntity.ok(bookService.createNewBook(bookDto,author_id));
+        BookDto tmpBookDto;
+        try {
+            tmpBookDto = bookService.createNewBook(bookDto,author_id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(tmpBookDto);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<BookDto> updateBookById(@RequestBody BookDto bookDto, @PathVariable long id) {
-        return ResponseEntity.ok(bookService.updateBookById(id, bookDto));
+        BookDto tmpBookDto;
+        try {
+            tmpBookDto = bookService.updateBookById(id, bookDto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(tmpBookDto);
     }
 
     @DeleteMapping("/remove/{id}")

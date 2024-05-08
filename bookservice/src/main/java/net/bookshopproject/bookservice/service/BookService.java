@@ -68,12 +68,17 @@ public class BookService {
     }
 
     public String deleteBookById(long id) {
-        bookRepository.deleteById(id);
-        return "Książka " + id + " została usunięta.";
+        if (bookRepository.findById(id).isEmpty()) {
+            return "Książka " + id + " nie została usunięta. Powód: nie ma takiej książki.";
+        }
+        else {
+            bookRepository.deleteById(id);
+            return "Książka " + id + " została usunięta.";
+        }
     }
 
     public BookDto updateBookById(long id, BookDto bookDto) {
-        Author author = bookRepository.getReferenceById(id).getAuthor();
+        Author author = bookRepository.findById(id).orElseThrow().getAuthor();
         bookDto.setAuthor(Mapper.mapFromAuthorToDto(author));
         Book book = Mapper.mapFromDtoToBook(bookDto);
         Book oldBook = bookRepository.getReferenceById(id);
