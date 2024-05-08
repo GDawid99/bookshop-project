@@ -29,9 +29,9 @@ public class BookController {
         return bookService.findAllBooks();
     }
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{title}/{id}")
-    public Book getBookByTitle(@PathVariable String title, @PathVariable long id) {
+    public ResponseEntity<Object> getBookByTitle(@PathVariable String title, @PathVariable long id) {
         return bookService.findBookByTitle(title,id);
     }
 

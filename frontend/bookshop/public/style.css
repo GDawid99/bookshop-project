@@ -1,9 +1,9 @@
-.bookImage {
+/* .bookImage {
     padding: 20px;
     width: 30%;
     height: auto; 
     justify-content: center;
-}
+} */
 
 @media only screen and (max-width: 600px) {
     .bookImage {
@@ -12,3 +12,9 @@
         margin-right: auto;
     }
 }
+
+.bookSearchButton {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+  }

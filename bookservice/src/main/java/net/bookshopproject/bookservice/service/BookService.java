@@ -51,13 +51,14 @@ public class BookService {
         return ResponseEntity.ok(randomBooklist);
     }
 
-    public Book findBookByTitle(String title, long author_id) {
+    public ResponseEntity<Object> findBookByTitle(String title, long author_id) {
         Author author = authorRepository.getReferenceById(author_id);
         Book book = bookRepository.findByTitle(title).orElseThrow();
-        if (author.getAuthor_id() != book.getAuthor().getAuthor_id()) {
+        if (!Objects.equals(author.getAuthor_id(), book.getAuthor().getAuthor_id())) {
             throw new IllegalStateException("Rozne id");
         }
-        return book;
+        BookDto bookDto = mapFromBookToDto(book);
+        return ResponseEntity.ok(book);
     }
 
     public Book createNewBook(BookDto bookDto, long author_id) {

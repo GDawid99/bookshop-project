@@ -76,10 +76,10 @@ export const Filter = (props) => {
                 <Box>
                     <Typography>Wg ceny:</Typography>
                     <Stack direction="row">
-                        <TextField placeholder="Od" value={priceFrom} onChange={checkInput} sx={{backgroundColor:"white"}}></TextField>
-                        <Typography variant="h6">:</Typography>
-                        <TextField placeholder="Do" value={priceTo} onChange={(e) => {setPriceTo(e.target.value);}} sx={{backgroundColor:"white"}}></TextField>
-                        <Checkbox checked={priceFilter} onClick={() => {
+                        <TextField variant="standard" InputProps={{disableUnderline: true}} sx={{width:"47%", margin:"5px", backgroundColor:"white", paddingTop:"4px"}} size="small" placeholder="Od" value={priceFrom} onChange={checkInput}></TextField>
+                        <Typography align="center" sx={{width:"6%", margin:"auto"}} variant="h6">:</Typography>
+                        <TextField variant="standard" InputProps={{disableUnderline: true}} sx={{width:"47%", margin:"5px", backgroundColor:"white", paddingTop:"4px"}} size="small" placeholder="Do" value={priceTo} onChange={(e) => {setPriceTo(e.target.value);}}></TextField>
+                        <Checkbox sx={{width:"10%"}} checked={priceFilter} onClick={() => {
                             if(!priceFilter) { 
                                 priceFrom = priceFrom.match(/\d+(\.\d+|\,\d+)?/)[0];
                                 priceTo = priceTo.match(/\d+(\.\d+|\,\d+)?/)[0];
@@ -111,16 +111,16 @@ export const Filter = (props) => {
                             })
                             .map((el) => {
                                 return (
-                                    <Stack direction="row">
-                                        <Typography>{el.genre}</Typography>
-                                        <Checkbox value={el.genre} checked={genreFilter.includes(el.genre)} onClick={checkGenre}></Checkbox>
+                                    <Stack direction="row" sx={{display:"flex"}}>
+                                        <Typography sx={{width:"90%", margin:"auto"}}>{el.genre}</Typography>
+                                        <Checkbox value={el.genre} checked={genreFilter.includes(el.genre)} onClick={checkGenre} sx={{width:"10%"}}></Checkbox>
                                     </Stack>
                                 );
                             })
                         }
                     </Stack>
                     <Typography>Wg oceny ponad:</Typography>
-                    <TextField placeholder="Ocena" sx={{backgroundColor:"white"}}></TextField>
+                    <TextField placeholder="Ocena" size="small" sx={{backgroundColor:"white"}}></TextField>
                     <Typography>Wg wydawnictwa:</Typography>
                     <Stack>
                         {
@@ -131,8 +131,8 @@ export const Filter = (props) => {
                             .map((el) => {
                                 return (
                                     <Stack direction="row">
-                                        <Typography>{el.publisher}</Typography>
-                                        <Checkbox value={el.publisher} checked={publisherFilter.includes(el.publisher)} onClick={checkPublisher}></Checkbox>
+                                        <Typography sx={{width:"90%", margin:"auto"}}>{el.publisher}</Typography>
+                                        <Checkbox value={el.publisher} checked={publisherFilter.includes(el.publisher)} onClick={checkPublisher} sx={{width:"10%"}}></Checkbox>
                                     </Stack>
                                 );
                             })
