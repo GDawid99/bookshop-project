@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,9 +18,11 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue
-    private long cart_id;
-    private long user_id;
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    @Column(name = "cart_id")
+    private long cartId;
+    @Column(name = "user_id")
+    private long userId;
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     private List<CartElement> cartElementList;
-    private Date date;
+    private LocalDate date;
 }

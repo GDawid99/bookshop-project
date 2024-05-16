@@ -1,11 +1,14 @@
 package net.bookshopproject.orderservice.dto;
 
-import java.sql.Date;
+import lombok.Data;
+
+import java.time.LocalDate;
 import java.util.List;
 
+@Data
 public class CartDto {
     private long cart_id;
     private long user_id;
     private List<CartElementDto> cartElementList;
-    private Date date;
+    private LocalDate date;
 }

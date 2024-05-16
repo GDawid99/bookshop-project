@@ -15,10 +15,12 @@ import lombok.Setter;
 public class CartElement {
     @Id
     @GeneratedValue
-    private long cartElement_id;
+    @Column(name = "cart_element_id")
+    private long cartElementId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
     private Cart cart;
-    private long book_id;
+    @Column(name = "book_id")
+    private long bookId;
     private int quantity;
 }
