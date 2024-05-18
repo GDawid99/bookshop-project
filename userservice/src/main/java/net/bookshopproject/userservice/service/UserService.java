@@ -4,13 +4,21 @@ import net.bookshopproject.userservice.dto.UserDto;
 import net.bookshopproject.userservice.model.User;
 import net.bookshopproject.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream().map(this::mapFromUserToDto).toList();
+    }
 
     public UserDto createNewUser(UserDto userDto) {
         User user = mapFromDtoToUser(userDto);
@@ -28,7 +36,7 @@ public class UserService {
         user.setLastname(userDto.getLastname());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setStatus(userDto.getStatus());
+        user.setRole(userDto.getRole());
         return user;
     }
 
@@ -39,7 +47,7 @@ public class UserService {
         userDto.setLastname(user.getLastname());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
-        userDto.setStatus(user.getStatus());
+        userDto.setRole(user.getRole());
         return userDto;
     }
 }
