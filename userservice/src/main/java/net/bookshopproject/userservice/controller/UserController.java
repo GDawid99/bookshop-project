@@ -1,12 +1,10 @@
 package net.bookshopproject.userservice.controller;
 
 import net.bookshopproject.userservice.dto.UserDto;
-import net.bookshopproject.userservice.model.User;
 import net.bookshopproject.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +22,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserDto addNewUser(@RequestBody UserDto userDto) {
-        //User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userService.createNewUser(userDto);
+    public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
+        userService.createNewUser(userDto);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).build();
     }
 
     @DeleteMapping("/remove/{id}")
-    //@PreAuthorize("hasAnyRole('ADMIN')")
     public String removeUser(@PathVariable long id) {
         userService.deleteUser(id);
         return "Użytkownik " + id + " został usunięty.";
