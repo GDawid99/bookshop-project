@@ -43,7 +43,7 @@ export const SignUp = () => {
                 role
             });
             console.log(response.data);
-            navigate("/home");
+            navigate("/");
         }
         catch (error) {
             console.error('Rejestracja nieudana. ', error.response ? error.response.data : error.message);
