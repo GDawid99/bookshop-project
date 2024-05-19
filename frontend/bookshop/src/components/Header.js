@@ -7,6 +7,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
+import { AccountInfo } from './AccountInfo';
 
 
 const Search = styled(Box)(({ theme }) => ({
@@ -25,6 +26,7 @@ export const Header = () => {
     const textFromUrl = useSearchParams();
     let title = (textFromUrl[0].get("title") === null || textFromUrl[0].get("title") === undefined) ? "" : textFromUrl[0].get("title");
     const [titleValue, setTitleValue] = useState(title);
+    const [showAccountOptions, setShowAccountOptions] = useState(false);
 
     const navigate = useNavigate();
 
@@ -76,11 +78,12 @@ export const Header = () => {
                 <ShoppingCartIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></ShoppingCartIcon>
             </Button>
         </Link>}
-        {user.token && <Link to="/signup" style={{textDecoration:"none"}}>
-            <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
-            <AccountBoxIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></AccountBoxIcon>
+        {user.token && 
+            <Button sx={{ fontSize: { xs:"20px", sm:"16px"}, color: 'white', display: 'block' }} onClick={() => setShowAccountOptions(!showAccountOptions)}>
+                <AccountBoxIcon sx={{fontSize: "20px", display:"block"}}></AccountBoxIcon>
             </Button>
-        </Link>}
+        }
+        {showAccountOptions && <AccountInfo setShowAccountOptions={setShowAccountOptions} />}
         </>     
     );
 }

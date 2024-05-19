@@ -83,9 +83,8 @@ const Home = () => {
     <ThemeProvider theme={themeOptions}>
       
     <CssBaseline/>
-    <Container>
+    <Container position="relative">
       <MainHeader/>
-      
       <Stack direction={{xs:"column", sm:"row"}}>
         <Stack direction="column" sx={{width: {xs:"100%", sm:"80%"}}}>
           <Paper sx={{margin:"15px", padding:"10px"}}>

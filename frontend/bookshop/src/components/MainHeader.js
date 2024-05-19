@@ -10,7 +10,7 @@ const StyledToolBar = styled(Toolbar)({
 export const MainHeader = () => {
     return(
         <AppBar position="sticky">
-            <StyledToolBar>        
+            <StyledToolBar position="relative">        
                 <Header/>
             </StyledToolBar>
             <StyledToolBar variant="dense" sx={{display: {xs: "none", md: "flex"}}}>        
