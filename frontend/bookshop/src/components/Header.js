@@ -2,8 +2,11 @@ import { Typography, InputBase, Button, Box, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LoginIcon from '@mui/icons-material/Login';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from './AuthProvider';
 
 
 const Search = styled(Box)(({ theme }) => ({
@@ -18,9 +21,10 @@ const Search = styled(Box)(({ theme }) => ({
 );
 
 export const Header = () => {
-    
+    const user = useAuth();
     const textFromUrl = useSearchParams();
-    const [titleValue, setTitleValue] = useState(textFromUrl[0].get("title"));
+    let title = (textFromUrl[0].get("title") === null || textFromUrl[0].get("title") === undefined) ? "" : textFromUrl[0].get("title");
+    const [titleValue, setTitleValue] = useState(title);
 
     const navigate = useNavigate();
 
@@ -55,17 +59,28 @@ export const Header = () => {
                 <SearchIcon sx={{fontSize: {sm:"15px"}, color:"grey"}}></SearchIcon>
             </IconButton>
         </Search>
-        <Link to="/login" style={{textDecoration:"none"}}>
+        {!user.token && <Link to="/login" style={{textDecoration:"none"}}>
             <Button sx={{ fontSize: "7px", color: 'white'}}>
                 <Typography sx={{fontSize: "10px", display:{xs:"none", sm:"block"}}}>Zaloguj się</Typography>
                 <LoginIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></LoginIcon>
             </Button>
-        </Link>
-        <Link to="/signup" style={{textDecoration:"none"}}>
+        </Link>}
+        {!user.token && <Link to="/signup" style={{textDecoration:"none"}}>
             <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
                 Zarejestruj się
             </Button>
-        </Link>
+        </Link>}
+        {user.token && <Link to="/login" style={{textDecoration:"none"}}>
+            <Button sx={{ fontSize: "7px", color: 'white'}}>
+                <ShoppingCartIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></ShoppingCartIcon>
+                <ShoppingCartIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></ShoppingCartIcon>
+            </Button>
+        </Link>}
+        {user.token && <Link to="/signup" style={{textDecoration:"none"}}>
+            <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
+            <AccountBoxIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></AccountBoxIcon>
+            </Button>
+        </Link>}
         </>     
     );
 }
