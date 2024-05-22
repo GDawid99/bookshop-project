@@ -21,12 +21,12 @@ const Search = styled(Box)(({ theme }) => ({
   })
 );
 
-export const Header = () => {
+export const Header = (props) => {
     const user = useAuth();
     const textFromUrl = useSearchParams();
     let title = (textFromUrl[0].get("title") === null || textFromUrl[0].get("title") === undefined) ? "" : textFromUrl[0].get("title");
     const [titleValue, setTitleValue] = useState(title);
-    const [showAccountOptions, setShowAccountOptions] = useState(false);
+    
 
     const navigate = useNavigate();
 
@@ -54,37 +54,36 @@ export const Header = () => {
     
     return (
         <>
-        <Typography variant='h6' sx={{textAlign:"center", fontSize: {xs: "10px", sm:"16px"}}}>Księgarnia</Typography>    
-        <Search>
-            <InputBase value={titleValue} onChange={changeTitle}  onKeyDown={(e) => { if (e.key === 'Enter') searchEvent()}} placeholder="Szukaj..." sx={{width:"100%"}}>
-            </InputBase>
-            <IconButton onMouseDown={searchEvent} sx={{display:{xs:"none", sm:"block"}}}>
-                <SearchIcon sx={{fontSize: {sm:"15px"}, color:"grey"}}></SearchIcon>
-            </IconButton>
-        </Search>
-        {!user.token && <Link to="/login" style={{textDecoration:"none"}}>
-            <Button sx={{ fontSize: "7px", color: 'white'}}>
-                <Typography sx={{fontSize: "10px", display:{xs:"none", sm:"block"}}}>Zaloguj się</Typography>
-                <LoginIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></LoginIcon>
-            </Button>
-        </Link>}
-        {!user.token && <Link to="/signup" style={{textDecoration:"none"}}>
-            <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
-                Zarejestruj się
-            </Button>
-        </Link>}
-        {user.token && <Link to="/login" style={{textDecoration:"none"}}>
-            <Button sx={{ fontSize: "7px", color: 'white'}}>
-                <ShoppingCartIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></ShoppingCartIcon>
-                <ShoppingCartIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></ShoppingCartIcon>
-            </Button>
-        </Link>}
-        {user.token && 
-            <Button sx={{ fontSize: { xs:"20px", sm:"16px"}, color: 'white', display: 'block' }} onClick={() => setShowAccountOptions(!showAccountOptions)}>
-                <AccountBoxIcon sx={{fontSize: "20px", display:"block"}}></AccountBoxIcon>
-            </Button>
-        }
-        {showAccountOptions && <AccountInfo setShowAccountOptions={setShowAccountOptions} />}
+            <Button variant='h6' sx={{textAlign:"center", fontSize:"11px", display:{xs:"none", sm:"block"}}} onClick={()=> {navigate("/");}}>Księgarnia</Button>    
+            <Search>
+                <InputBase value={titleValue} onChange={changeTitle}  onKeyDown={(e) => { if (e.key === 'Enter') searchEvent()}} placeholder="Szukaj..." sx={{width:"100%"}}>
+                </InputBase>
+                <IconButton onMouseDown={searchEvent} sx={{display:{xs:"none", sm:"block"}}}>
+                    <SearchIcon sx={{fontSize: {sm:"15px"}, color:"grey"}}></SearchIcon>
+                </IconButton>
+            </Search>
+            {!user.token && <Link to="/login" style={{textDecoration:"none"}}>
+                <Button sx={{ fontSize: "7px", color: 'white'}}>
+                    <Typography sx={{fontSize: "10px", display:{xs:"none", sm:"block"}}}>Zaloguj się</Typography>
+                    <LoginIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></LoginIcon>
+                </Button>
+            </Link>}
+            {!user.token && <Link to="/signup" style={{textDecoration:"none"}}>
+                <Button sx={{ fontSize: { xs:"7px", sm:"10px"}, color: 'white', display: 'block' }}>
+                    Zarejestruj się
+                </Button>
+            </Link>}
+            {user.token && <Link to="/login" style={{textDecoration:"none"}}>
+                <Button sx={{ fontSize: "7px", color: 'white'}}>
+                    <ShoppingCartIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></ShoppingCartIcon>
+                    <ShoppingCartIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></ShoppingCartIcon>
+                </Button>
+            </Link>}
+            {user.token && 
+                <Button sx={{ fontSize: { xs:"20px", sm:"16px"}, color: 'white', display: 'block' }} onClick={() => props.setShowAccountOptions(!props.showAccountOptions)}>
+                    <AccountBoxIcon sx={{fontSize: "20px", display:"block"}}></AccountBoxIcon>
+                </Button>
+            }
         </>     
     );
 }

@@ -83,7 +83,7 @@ const Home = () => {
     <ThemeProvider theme={themeOptions}>
       
     <CssBaseline/>
-    <Container position="relative">
+    <Container>
       <MainHeader/>
       <Stack direction={{xs:"column", sm:"row"}}>
         <Stack direction="column" sx={{width: {xs:"100%", sm:"80%"}}}>
