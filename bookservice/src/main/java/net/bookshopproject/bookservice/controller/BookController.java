@@ -17,25 +17,21 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/page")
     public ResponseEntity<List<BookDto>> getBooksByPage(@RequestParam("title") String title, @RequestParam(name = "id") long id, @RequestParam(name="size") int size) {
         return ResponseEntity.ok(bookService.findBooksByPage(title,id,size));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping()
     public ResponseEntity<List<BookDto>> getAllBooks() {
         return ResponseEntity.ok(bookService.findAllBooks());
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{title}/{id}")
     public ResponseEntity<BookDto> getBookByTitle(@PathVariable String title, @PathVariable long id) {
         return ResponseEntity.ok(bookService.findBookByTitle(title,id));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/random")
     public ResponseEntity<List<BookDto>> getThreeRandomBooks() {
         return ResponseEntity.ok(bookService.findThreeRandomBooks());
