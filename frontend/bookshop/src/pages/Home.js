@@ -107,17 +107,17 @@ const Home = () => {
           <Typography variant="h6">Polecane dziś:</Typography>
                 <RecommendedPaper>
                     {books[0] &&
-                        <RecommendedBook imageSrc={`/images/${books[0].imageUrl}`} title={books[0].title} author={books[0].author.firstname + " " + books[0].author.lastname} publisher={books[0].publisher} price={books[0].price} rating={books[0].rating}/>
+                        <RecommendedBook imageSrc={`/images/${books[0].imageUrl}`} title={books[0].title} author={books[0].author} publisher={books[0].publisher} price={books[0].price} rating={books[0].rating}/>
                     }
                 </RecommendedPaper>
                 <RecommendedPaper>
                     {books[1] &&
-                    <RecommendedBook imageSrc={`/images/${books[1].imageUrl}`} title={books[1].title} author={books[1].author.firstname + " " + books[1].author.lastname} publisher={books[1].publisher} price={books[1].price} rating={books[1].rating}/>
+                    <RecommendedBook imageSrc={`/images/${books[1].imageUrl}`} title={books[1].title} author={books[1].author} publisher={books[1].publisher} price={books[1].price} rating={books[1].rating}/>
                 }
                 </RecommendedPaper>
                 <RecommendedPaper>
                 {books[2] &&
-                    <RecommendedBook imageSrc={`/images/${books[2].imageUrl}`} title={books[2].title} author={books[2].author.firstname + " " + books[2].author.lastname} publisher={books[2].publisher} price={books[2].price} rating={books[2].rating}/>
+                    <RecommendedBook imageSrc={`/images/${books[2].imageUrl}`} title={books[2].title} author={books[2].author} publisher={books[2].publisher} price={books[2].price} rating={books[2].rating}/>
                 }
                 </RecommendedPaper>
       

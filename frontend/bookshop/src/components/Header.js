@@ -39,7 +39,8 @@ export const Header = () => {
     }
 
     const goToPosts = (title) => {
-        navigate({
+        if (title === "") navigate("/search");
+        else navigate({
             pathname:'/search',
             search:`title=${title}&id=${id}&size=${size}`
         })

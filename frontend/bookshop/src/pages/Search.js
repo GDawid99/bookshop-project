@@ -41,7 +41,11 @@ export const Search = (props) => {
    
 
     useEffect(() => {
-        if (title !== "") fetch('http://localhost:8080/api/book/page?title=' + title + '&id=' + id + '&size=' + size)
+        let req;
+        if (title !== "") req = 'http://localhost:8080/api/book/page?title=' + title + '&id=' + id + '&size=' + size;
+        else req = 'http://localhost:8080/api/book';
+        
+        fetch(req)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);

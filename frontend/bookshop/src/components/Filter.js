@@ -113,7 +113,7 @@ export const Filter = (props) => {
                                 return (
                                     <Stack direction="row" sx={{display:"flex"}}>
                                         <Typography sx={{width:"90%", margin:"auto"}}>{el.genre}</Typography>
-                                        <Checkbox value={el.genre} checked={genreFilter.includes(el.genre)} onClick={checkGenre} sx={{width:"10%"}}></Checkbox>
+                                        <Checkbox value={el.genre} checked={genreFilter.includes(el.genre) || params.get("genre") === el.genre} onClick={checkGenre} sx={{width:"10%"}}></Checkbox>
                                     </Stack>
                                 );
                             })
