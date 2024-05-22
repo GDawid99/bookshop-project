@@ -10,7 +10,7 @@ export const AccountInfo = ({setShowAccountOptions}) => {
     const showOptions = useCallback((e) => {
         setDisablePaper(false);
         setOptionsOn("accountBackgroundOff")
-        setTimeout(() => {setShowAccountOptions(false)}, 700);
+        setTimeout(() => {setShowAccountOptions(false)}, 200);
     }, [setShowAccountOptions])
 
 

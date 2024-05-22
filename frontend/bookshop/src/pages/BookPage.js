@@ -3,10 +3,12 @@ import { MainHeader } from "../components/MainHeader"
 import { themeOptions } from "./Home";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../components/AuthProvider";
 
 
 
 export const BookPage = () => {
+    const user = useAuth();
 
     const [url] = useSearchParams();
     const [book, setBook] = useState();
@@ -64,7 +66,7 @@ export const BookPage = () => {
                                 <Typography display="inline" sx={{fontSize:{xs:"20px", sm:"18px",md:"20px",lg:"22px"}, fontWeight:"bold"}}>Cena: </Typography>
                                 <Typography display="inline" sx={{fontSize:{xs:"18px", sm:"16px",md:"18px",lg:"20px"},color:"purple"}}>693,69 zł</Typography>
                                 {
-                                    //JESLI ZALOGOWANY
+                                    user.token &&
                                     <Button size="large" variant="contained" sx={{margin:"10px 0", width:"100%"}}>Dodaj do koszyka</Button>
                                 }
                                 <Typography>Sprawdź także inną książkę autora:</Typography>

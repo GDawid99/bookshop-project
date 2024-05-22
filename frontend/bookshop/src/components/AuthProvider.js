@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 const AuthContext = createContext();
@@ -9,6 +9,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("site") || "");
     const navigate = useNavigate();
+    
     const login = async(data) => {
         try {
             console.log("DANE:");
@@ -27,7 +28,7 @@ export const AuthProvider = ({children}) => {
                 setUser(res.user);
                 setToken(res.token);
                 localStorage.setItem("site", res.token);
-                navigate("/");
+                navigate(-1);
                 return;
             }
             throw new Error(res.message);
@@ -41,7 +42,7 @@ export const AuthProvider = ({children}) => {
         setUser(null);
         setToken("");
         localStorage.removeItem("site");
-        navigate("/");
+        return <Link to={window.location.href} />
     }
 
     return <AuthContext.Provider value={{token, user, login, logout}}>{children}</AuthContext.Provider>;
