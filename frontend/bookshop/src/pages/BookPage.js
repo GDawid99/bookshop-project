@@ -12,6 +12,8 @@ export const BookPage = () => {
 
     const [url] = useSearchParams();
     const [book, setBook] = useState();
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart") || "[]"));
+    const [isAdded, setIsAdded] = useState(false);
     const location = useLocation();
 
     const title = url.get("title");
@@ -23,11 +25,35 @@ export const BookPage = () => {
         .then((data) => {
             console.log(data);
             setBook(data);
+            const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+            setIsAdded(updatedCart.some(e => e.element.book_id === data.book_id));
+            console.log(isAdded);
         })
         .catch((err) => {
             console.log(err.message);
         });
     }, []);
+
+
+    const addToCart = () => {        
+        const updatedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        console.log(updatedCart);
+        const tmpMaxId = updatedCart.length === 0 ? 1 : Math.max(...updatedCart.map(el => el.id)) + 1;
+        updatedCart.push({
+            id: tmpMaxId,
+            element:{
+                book_id: book.book_id,
+                title: book.title,
+                price: book.price,
+                img: book.imageUrl,
+                amount: 1
+            }
+        });
+        setCart(updatedCart)
+        setIsAdded(true);
+        localStorage.setItem("cart", JSON.stringify(updatedCart))
+        
+    }
 
 
     if (book === undefined) return (
@@ -49,7 +75,7 @@ export const BookPage = () => {
                                  </Paper>
                                  <Stack sx={{width:{xs:"auto",sm:"70%"}, padding:"5px"}}>
                                      <Typography variant="h4">Autor:</Typography>
-                                     <Typography>BLA BLA</Typography>
+                                     <Typography>{book.author.firstname + " " + book.author.lastname}</Typography>
                                     <Typography variant="h4">Wydawnictwo:</Typography>
                                     <Typography>{book.publisher}</Typography>
                                     <Typography variant="h4">Gatunek:</Typography>
@@ -64,10 +90,10 @@ export const BookPage = () => {
                         <Paper sx={{margin:"15px", width:{xs:"auto",sm:"30%"}}}>
                             <Box sx={{padding:"10px"}}>
                                 <Typography display="inline" sx={{fontSize:{xs:"20px", sm:"18px",md:"20px",lg:"22px"}, fontWeight:"bold"}}>Cena: </Typography>
-                                <Typography display="inline" sx={{fontSize:{xs:"18px", sm:"16px",md:"18px",lg:"20px"},color:"purple"}}>693,69 zł</Typography>
+                                <Typography display="inline" sx={{fontSize:{xs:"18px", sm:"16px",md:"18px",lg:"20px"},color:"purple"}}>{book.price} zł</Typography>
                                 {
                                     user.token &&
-                                    <Button size="large" variant="contained" sx={{margin:"10px 0", width:"100%"}}>Dodaj do koszyka</Button>
+                                    <Button size="large" variant="contained" disabled={isAdded} sx={{margin:"10px 0", width:"100%"}} onClick={addToCart}>Dodaj do koszyka</Button>
                                 }
                                 <Typography>Sprawdź także inną książkę autora:</Typography>
                             </Box>

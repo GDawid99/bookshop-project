@@ -7,7 +7,6 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
-import { AccountInfo } from './AccountInfo';
 
 
 const Search = styled(Box)(({ theme }) => ({
@@ -29,8 +28,6 @@ export const Header = (props) => {
     
 
     const navigate = useNavigate();
-
-    //let title = "P";
     let id = 0;
     let size = 2;
 
@@ -73,12 +70,12 @@ export const Header = (props) => {
                     Zarejestruj się
                 </Button>
             </Link>}
-            {user.token && <Link to="/login" style={{textDecoration:"none"}}>
-                <Button sx={{ fontSize: "7px", color: 'white'}}>
+            {user.token &&
+                <Button sx={{ fontSize: "7px", color: 'white'}} onClick={() => props.setShowCart(!props.showCart)}>
                     <ShoppingCartIcon sx={{fontSize: "20px", display:{xs:"none", sm:"block"}}}></ShoppingCartIcon>
                     <ShoppingCartIcon sx={{fontSize: "16px", display:{xs:"block", sm:"none"}}}></ShoppingCartIcon>
                 </Button>
-            </Link>}
+            }
             {user.token && 
                 <Button sx={{ fontSize: { xs:"20px", sm:"16px"}, color: 'white', display: 'block' }} onClick={() => props.setShowAccountOptions(!props.showAccountOptions)}>
                     <AccountBoxIcon sx={{fontSize: "20px", display:"block"}}></AccountBoxIcon>

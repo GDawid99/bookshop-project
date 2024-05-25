@@ -3,21 +3,13 @@ import { SignUp } from '../pages/SignUp';
 import Home from '../pages/Home';
 import { LogIn } from '../pages/LogIn';
 import { Search } from '../pages/Search';
-import { useState } from 'react';
 import { BookPage } from '../pages/BookPage';
 import { AuthProvider } from './AuthProvider';
 
 
 
 const App = () => {
-
-  //const [params, setParams] = useState([]);
-  
-
   let param;
-
-  //setParams(["P",0,2]);
-
   return (
     
     <BrowserRouter>

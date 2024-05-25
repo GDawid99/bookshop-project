@@ -1,4 +1,4 @@
-import { Box, Button, Container, CssBaseline, Paper, Rating, Stack, ThemeProvider, Typography, styled } from "@mui/material"
+import { Box, Container, CssBaseline, Paper, Rating, Stack, ThemeProvider, Typography, styled } from "@mui/material"
 import { themeOptions } from "./Home"
 import { MainHeader } from "../components/MainHeader";
 import { useEffect, useState } from "react";
@@ -69,7 +69,7 @@ export const Search = (props) => {
                             </PaperFilter>
                         </Box>
                         <Stack direction="column" sx={{width:{sm:"75%",xs:"100%"}}}>
-                            {book === undefined || book.length === 0 ?
+                            {book === undefined || book.status !== undefined || book.length === 0 ?
                                 <Typography><br/>Nic nie znaleziono.</Typography>
                                 : book.filter((el) => {
                                     return (parseFloat(el.price) >= priceFrom && parseFloat(el.price) <= priceTo);

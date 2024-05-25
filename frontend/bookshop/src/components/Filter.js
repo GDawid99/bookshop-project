@@ -1,20 +1,6 @@
-import { Box, Checkbox, Grid, Stack, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, Checkbox, Stack, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
-
-const test = [
-        { publisher:"A"},
-        { publisher:"B"},
-        { publisher:"A"},
-        { publisher:"C"},
-        { publisher:"D"},
-        { publisher:"B"},
-        { publisher:"B"},
-        { publisher:"C"},
-        { publisher:"E"},
-        { publisher:"A"}
-];
 
 export const Filter = (props) => {
     
@@ -68,8 +54,6 @@ export const Filter = (props) => {
         }
     }
     
-    //console.log(typeof props.book);
-
     return(
         <>
             <Typography variant="h4">Filtruj:</Typography>
