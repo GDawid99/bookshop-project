@@ -1,9 +1,11 @@
 import { Box, Button, Paper, Stack } from "@mui/material"
 import { useAuth } from "./AuthProvider"
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AccountInfo = ({setShowAccountOptions}) => {
     const auth = useAuth();
+    const navigate = useNavigate();
     const [optionsOn, setOptionsOn] = useState("accountBackgroundOn");
     const [disablePaper, setDisablePaper] = useState(true);
 
@@ -25,7 +27,7 @@ export const AccountInfo = ({setShowAccountOptions}) => {
         <Box className={optionsOn} onClick={showOptions}>
             {disablePaper && <Paper className="accountContainer" onClick={(e) => e.stopPropagation()}>
                 <Stack direction="column">
-                    <Button>Profil</Button>
+                    <Button onClick={() => navigate("/profile")}>Profil</Button>
                     <Button>Moje zakupy</Button>
                     <Button>Rekomendacje</Button>
                     <Button>Ustawienia konta</Button>

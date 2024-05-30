@@ -46,7 +46,7 @@ export const BookPage = () => {
                 title: book.title,
                 price: book.price,
                 img: book.imageUrl,
-                amount: 1
+                quantity: 1
             }
         });
         setCart(updatedCart)

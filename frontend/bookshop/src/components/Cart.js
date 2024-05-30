@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Stack, Typography } from "@mui/material"
 import { useCallback, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Cart = ({setShowCart}) => {
     const cartObject = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -11,11 +11,12 @@ export const Cart = ({setShowCart}) => {
     const [finalPrice, setFinalPrice] = useState(() => {
         let sum = 0;
         cartObject.forEach(el => {
-            sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.amount);
+            sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.quantity);
         });
         return sum.toFixed(2);
     });
     const location = useLocation();
+    const navigate = useNavigate();
 
 
     const showOptions = useCallback((e) => {
@@ -28,13 +29,13 @@ export const Cart = ({setShowCart}) => {
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
         let element = cart.find(el => el.id === id);
         if (element) {
-            element.element.amount = e.target.value;
+            element.element.quantity = e.target.value;
         }
         setCartElements(cart);
         setFinalPrice(() => {
             let sum = 0;
             cart.forEach(el => {
-                sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.amount);
+                sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.quantity);
             });
             return sum.toFixed(2);
         });
@@ -49,7 +50,7 @@ export const Cart = ({setShowCart}) => {
         setFinalPrice(() => {
             let sum = 0;
             updatedArray.forEach(el => {
-                sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.amount);
+                sum += Number.parseFloat(el.element.price)*Number.parseFloat(el.element.quantity);
             });
             return sum.toFixed(2);
         });
@@ -74,8 +75,8 @@ export const Cart = ({setShowCart}) => {
                                                         <img src={`/images/${el.element.img}`} alt={el.element.title} width="100%" height="auto" style={{display:"block"}}/>
                                                     </div>
                                                     <Typography align="center" sx={{margin:"auto", width:"20%", fontSize:{xs:"35px", sm:"10px", md:"20px"}}}>{el.element.title}</Typography>
-                                                    <input type="number" min="1" value={el.element.amount} onChange={(e) => setPrice(e, el.id)} style={{ margin:"auto",width:"15%"}}  />
-                                                    <Typography textAlign="center" sx={{width:"25%", margin:"auto", fontSize:{xs:"30px", sm:"10px",md:"15px"}}}>{(Number.parseFloat(el.element.price)*Number.parseFloat(el.element.amount)).toFixed(2)}</Typography>
+                                                    <input type="number" min="1" value={el.element.quantity} onChange={(e) => setPrice(e, el.id)} style={{ margin:"auto",width:"15%"}}  />
+                                                    <Typography textAlign="center" sx={{width:"25%", margin:"auto", fontSize:{xs:"30px", sm:"10px",md:"15px"}}}>{(Number.parseFloat(el.element.price)*Number.parseFloat(el.element.quantity)).toFixed(2)}</Typography>
                                                     <Button size="small" onClick={() => removeBook(el.id)}><DeleteIcon/></Button>
                                             </Stack>
                                         </Paper>
@@ -85,7 +86,7 @@ export const Cart = ({setShowCart}) => {
                     <Stack sx={{padding:"5px", width:{sm:"100%", md:"40%"}, height:{sm:"60%", md:"100%"}, border:"2px solid black", overflow:"auto"}}>
                         <Typography variant="h4" textAlign="center">Kwota:</Typography>
                         <Typography textAlign="center" sx={{border:"2px solid #3d0200", fontSize:{xs:"35px", sm:"18px", md:"25px"}, backgroundColor:"white"}}>{finalPrice} zł</Typography>
-                        <Button variant="contained" sx={{height:{sm:"40%", md:"10%"}, margin:"5px"}}>Przejdź do zakupu</Button>
+                        <Button variant="contained" sx={{height:{sm:"40%", md:"10%"}, margin:"5px"}} onClick={() => navigate("/payment")}>Przejdź do zakupu</Button>
                         <Button variant="contained" sx={{height:{sm:"40%", md:"10%"}, margin:"5px"}} onClick={showOptions}>Kontynuuj przeglądanie</Button>
                     </Stack>
                 </Stack>
