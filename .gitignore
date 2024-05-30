@@ -27,3 +27,5 @@
 /bookservice/target
 /orderservice/target
 /userservice/target
+/articleservice/target
+/notificationservice/target
