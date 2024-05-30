@@ -31,9 +31,9 @@ public class OrderserviceApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Cart cart1 = new Cart(1,1,new ArrayList<>(), LocalDate.of(2024,3,20));
-		Cart cart2 = new Cart(2,6,new ArrayList<>(), LocalDate.of(2024,1,24));
-		Cart cart3 = new Cart(3,3,new ArrayList<>(), LocalDate.of(2024,1,11));
+		Cart cart1 = new Cart(1,1,new ArrayList<>(), LocalDate.of(2024,3,20), Status.DELIVERED.name());
+		Cart cart2 = new Cart(2,6,new ArrayList<>(), LocalDate.of(2024,1,24), Status.CANCELLED.name());
+		Cart cart3 = new Cart(3,3,new ArrayList<>(), LocalDate.of(2024,1,11), Status.NEW.name());
 
 
 		CartElement element1 = new CartElement(1,cart1,1,3);

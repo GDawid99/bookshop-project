@@ -32,4 +32,15 @@ public class CartElementService {
         return cartElementDtoList;
     }
 
+    public String addCartElements(List<CartElementDto> list, long cart_id) {
+        List<CartElement> elements = new ArrayList<>();
+        Cart cart = cartRepository.findById(cart_id).orElseThrow();
+        for (CartElementDto dto: list) {
+            dto.setCart(Mapper.mapFromCartToDto(cart));
+            elements.add(Mapper.mapFromDtoToCartElement(dto));
+        }
+        cartElementRepository.saveAll(elements);
+        return "Cart Elements Added.";
+    }
+
 }

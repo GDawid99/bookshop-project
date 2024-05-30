@@ -3,11 +3,9 @@ package net.bookshopproject.orderservice.controller;
 import net.bookshopproject.orderservice.dto.CartElementDto;
 import net.bookshopproject.orderservice.service.CartElementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,12 @@ public class CartElementController {
     @GetMapping("/cart/{id}")
     public ResponseEntity<List<CartElementDto>> findAllProductsByCart(@PathVariable long id) {
         return ResponseEntity.ok(cartElementService.findAllElementsFromCart(id));
+    }
+
+    @PostMapping("/cart/{id}")
+    public ResponseEntity<String> addCartElements(@PathVariable long cart_id, @RequestBody List<CartElementDto> elements) {
+        cartElementService.addCartElements(elements, cart_id);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).build();
     }
 
 }

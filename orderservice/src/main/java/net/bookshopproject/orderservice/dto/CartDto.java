@@ -11,4 +11,5 @@ public class CartDto {
     private long user_id;
     private List<CartElementDto> cartElementList;
     private LocalDate date;
+    private String status;
 }

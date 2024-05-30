@@ -29,6 +29,7 @@ public class Mapper {
         cart.setCartId(cartDto.getCart_id());
         cart.setUserId(cartDto.getUser_id());
         cart.setDate(cartDto.getDate());
+        cart.setStatus(cartDto.getStatus());
         return cart;
     }
 
@@ -37,6 +38,7 @@ public class Mapper {
         cartDto.setCart_id(cart.getCartId());
         cartDto.setUser_id(cart.getUserId());
         cartDto.setDate(cart.getDate());
+        cartDto.setStatus(cart.getStatus());
         return cartDto;
     }
 }

@@ -23,4 +23,10 @@ public class CartElement {
     @Column(name = "book_id")
     private long bookId;
     private int quantity;
+
+    public CartElement(Cart cart, long bookId, int quantity) {
+        this.cart = cart;
+        this.bookId = bookId;
+        this.quantity = quantity;
+    }
 }

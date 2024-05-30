@@ -25,4 +25,12 @@ public class Cart {
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     private List<CartElement> cartElementList;
     private LocalDate date;
+    private String Status;
+
+    public Cart(long userId, List<CartElement> cartElementList, LocalDate date, String status) {
+        this.userId = userId;
+        this.cartElementList = cartElementList;
+        this.date = date;
+        Status = status;
+    }
 }
