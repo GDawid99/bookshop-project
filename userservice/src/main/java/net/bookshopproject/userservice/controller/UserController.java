@@ -5,6 +5,8 @@ import net.bookshopproject.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,21 @@ public class UserController {
     public ResponseEntity<UserDto> addNewUser(@RequestBody UserDto userDto) {
         userService.createNewUser(userDto);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserDto userDto) {
+        try {
+            if (userService.checkIfUserExist(userDto)) return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("""
+                    {
+                        "user":"emil",
+                        "token":"xd"
+                    }
+                    """);
+            else return ResponseEntity.ok("Złe hasło");
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/remove/{id}")

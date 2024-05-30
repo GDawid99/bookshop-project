@@ -16,13 +16,26 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(this::mapFromUserToDto).toList();
     }
 
     public UserDto createNewUser(UserDto userDto) {
         User user = mapFromDtoToUser(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return mapFromUserToDto(userRepository.save(user));
+    }
+
+    public boolean checkIfUserExist(UserDto userDto) {
+        User postUser = mapFromDtoToUser(userDto);
+        User user = userRepository.findByEmail(postUser.getEmail()).orElseThrow();
+        System.out.println("PUS: " + postUser.getPassword());
+        System.out.println("US: " + user.getPassword());
+        if (passwordEncoder.matches(postUser.getPassword(), user.getPassword())) return true;
+        else return false;
     }
 
     public void deleteUser(long id) {
@@ -50,4 +63,6 @@ public class UserService {
         userDto.setRole(user.getRole());
         return userDto;
     }
+
+
 }
