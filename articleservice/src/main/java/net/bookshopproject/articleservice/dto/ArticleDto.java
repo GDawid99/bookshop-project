@@ -15,6 +15,6 @@ public class ArticleDto {
     private long article_id;
     private String title;
     private String body;
-    private List<Comment> commentList;
+    private List<CommentDto> commentList;
     private LocalDate dateOfPublication;
 }

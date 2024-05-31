@@ -14,6 +14,6 @@ public class CommentDto {
     private long comment_id;
     private long user_id;
     private String body;
-    private Article article;
+    private ArticleDto article;
     private LocalDate dateOfPublication;
 }

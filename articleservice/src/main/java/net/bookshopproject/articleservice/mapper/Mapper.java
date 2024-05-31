@@ -11,7 +11,7 @@ public class Mapper {
         article.setArticle_id(articleDto.getArticle_id());
         article.setBody(articleDto.getBody());
         article.setTitle(articleDto.getTitle());
-        article.setCommentList(articleDto.getCommentList());
+        //article.setCommentList(articleDto.getCommentList());
         article.setDateOfPublication(articleDto.getDateOfPublication());
         return article;
     }
@@ -21,7 +21,7 @@ public class Mapper {
         articleDto.setArticle_id(article.getArticle_id());
         articleDto.setBody(article.getBody());
         articleDto.setTitle(article.getTitle());
-        articleDto.setCommentList(article.getCommentList());
+        //articleDto.setCommentList(article.getCommentList());
         articleDto.setDateOfPublication(article.getDateOfPublication());
         return articleDto;
     }
@@ -31,7 +31,7 @@ public class Mapper {
         comment.setComment_id(commentDto.getComment_id());
         comment.setUser_id(commentDto.getUser_id());
         comment.setBody(commentDto.getBody());
-        comment.setArticle(commentDto.getArticle());
+        comment.setArticle(mapFromDtoToArticle(commentDto.getArticle()));
         comment.setDateOfPublication(commentDto.getDateOfPublication());
         return comment;
     }
@@ -41,7 +41,7 @@ public class Mapper {
         commentDto.setComment_id(comment.getComment_id());
         commentDto.setUser_id(comment.getUser_id());
         commentDto.setBody(comment.getBody());
-        commentDto.setArticle(comment.getArticle());
+        commentDto.setArticle(mapFromArticleToDto(comment.getArticle()));
         commentDto.setDateOfPublication(comment.getDateOfPublication());
         return commentDto;
     }
