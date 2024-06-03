@@ -32,6 +32,7 @@ public class CartService {
         for (CartElementDto dto: cartRequestBody.getElements()) {
             cartElementRepository.save(new CartElement(cart,dto.getBook_id(),dto.getQuantity()));
         }
+        amqpTemplate.convertAndSend("notification-exchange", "key.order", "STATUS:" + cart.getStatus() + ";CART_ID:" + cart.getCartId() + ";USER_ID:" + cart.getUserId());
         return "New order created.";
     }
 
