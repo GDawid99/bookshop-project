@@ -13,14 +13,19 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
-    @PostMapping("/create")
-    public ArticleDto createArticle(@RequestBody ArticleDto articleDto) {
-        return articleService.createNewArticle(articleDto);
+    @PostMapping("/create/{user_id}")
+    public ArticleDto createArticle(@RequestBody ArticleDto articleDto, @PathVariable long user_id) {
+        return articleService.createNewArticle(articleDto, user_id);
     }
 
     @GetMapping("/")
     public Page<ArticleDto> getArticles(@RequestParam int page, @RequestParam int size) {
         return articleService.getAllArticleWithPageable(page,size);
+    }
+
+    @GetMapping("/{id}")
+    public ArticleDto getArticle(@PathVariable long id) {
+        return articleService.getArticle(id);
     }
 
 }

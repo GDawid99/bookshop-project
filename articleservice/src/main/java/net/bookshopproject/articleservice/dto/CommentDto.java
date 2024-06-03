@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.bookshopproject.articleservice.model.Article;
+import net.bookshopproject.articleservice.model.User;
 
 import java.time.LocalDate;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CommentDto {
     private long comment_id;
-    private long user_id;
+    private UserDto user;
     private String body;
     private ArticleDto article;
     private LocalDate dateOfPublication;

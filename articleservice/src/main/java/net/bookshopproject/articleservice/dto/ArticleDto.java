@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.bookshopproject.articleservice.model.Comment;
+import net.bookshopproject.articleservice.model.User;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,4 +18,5 @@ public class ArticleDto {
     private String body;
     private List<CommentDto> commentList;
     private LocalDate dateOfPublication;
+    private UserDto user;
 }
