@@ -4,6 +4,7 @@ import { RecommendedPaper } from '../components/RecommendedPaper';
 import { RecommendedBook } from '../components/RecommendedBook';
 import { useEffect, useState } from 'react';
 import { MainHeader } from '../components/MainHeader';
+import { Link } from 'react-router-dom';
 
 
 export const themeOptions = createTheme({
@@ -95,7 +96,11 @@ const Home = () => {
             articles.content === undefined ? <CircularProgress sx={{margin:"auto"}}/> :
             articles.content.map(el => (
               <Paper sx={{margin:"15px", padding:"10px"}}>
-                <Article title={el.title} contents={el.body} />
+                  <h1>{el.title}</h1>
+                  <p style={{textAlign:"justify",padding:"10px"}}>{el.body.slice(0,500)}...</p>
+                  <Link to={`/article?id=${el.article_id}`}>
+                    <Button variant="text">Czytaj więcej...</Button>
+                  </Link>
               </Paper>
             ))
           }

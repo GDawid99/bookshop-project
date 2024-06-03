@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../components/AuthProvider';
 
 
 const TextFieldStyle = styled(TextField)(({ theme }) => ({
@@ -21,12 +22,13 @@ export const SignUp = () => {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("USER");
+    const [role, setRole] = useState("ROLE_USER");
     let [password, setPassword] = useState("");
     let [repeatedPassword, setRepeatedPassword] = useState("");
     let [passwordIsCorrect, setPasswordIsCorrect] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const auth = useAuth();
 
     const checkIfPasswordIsEqual = () => {
         password === repeatedPassword ? setPasswordIsCorrect(true) : setPasswordIsCorrect(false);
@@ -35,7 +37,7 @@ export const SignUp = () => {
 
     const signUp = async() => {
         try {
-            const response = await axios.post('http://localhost:8080/api/user/register', {
+            const response = await axios.post('http://localhost:8080/api/user/auth/register', {
                 firstname,
                 lastname,
                 email,
@@ -43,7 +45,12 @@ export const SignUp = () => {
                 role
             });
             console.log(response.data);
-            navigate("/");
+            
+            const inputData = {
+                email:email,
+                password:password
+            };
+            auth.login(inputData);
         }
         catch (error) {
             console.error('Rejestracja nieudana. ', error.response ? error.response.data : error.message);

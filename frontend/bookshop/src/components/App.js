@@ -8,6 +8,10 @@ import { AuthProvider} from './AuthProvider';
 import { PrivateRoute } from './PrivateRoute';
 import { Profile } from '../pages/Profile';
 import { Payment } from '../pages/Payment';
+import { Article } from './Article';
+import { ArticleCreator } from '../pages/ArticleCreator';
+import { Panel } from '../pages/Panel';
+import { BookManager } from '../pages/BookManager';
 
 
 
@@ -22,10 +26,19 @@ const App = () => {
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/login" element={<LogIn/>}/>
           <Route path={"/search"} element={<Search phrase={param}/>}/>
-          <Route path="offer" element={<BookPage/>}/>
-          <Route element={<PrivateRoute/>}>
+          <Route path="/offer" element={<BookPage/>}/>
+          <Route path="/article" element={<Article/>}/>
+          <Route element={<PrivateRoute role="ROLE_USER"/>}>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/payment" element={<Payment/>}/>
+          </Route>
+          <Route element={<PrivateRoute role="ROLE_MODERATOR"/>}>
+            <Route path="/article/creator" element={<ArticleCreator/>}/>
+            <Route path="/panel" element={<Panel/>}/>
+            <Route path="/book" element={<BookManager/>}/>
+          </Route>
+          <Route element={<PrivateRoute role="ROLE_ADMIN"/>}>
+            
           </Route>
         </Routes>
       </AuthProvider>

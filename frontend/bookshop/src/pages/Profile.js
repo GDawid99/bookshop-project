@@ -3,6 +3,7 @@ import { useAuth } from "../components/AuthProvider";
 import { themeOptions } from "./Home";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 
 export const Profile = () => {
@@ -54,7 +55,7 @@ export const Profile = () => {
             <Paper sx={{margin:"20px", padding:"20px"}}>    
                 <Stack direction={{xs:"column",sm:"row"}} sx={{display:"flex", justifyContent:"space-between"}}>
                     <div sx={{height:"100%"}}>
-                        <Typography variant="h3">Witaj!</Typography>
+                        <Typography variant="h3">Witaj, {jwtDecode(auth.token).name}!</Typography>
                     </div>
                     <Stack direction={{xs:"column",sm:"row"}} sx={{height:"100%" }}>
                         <Button variant="contained" onClick={() => navigate("/")} sx={{height:"100%", margin:"10px"}}>Wróć na stronę główną</Button>

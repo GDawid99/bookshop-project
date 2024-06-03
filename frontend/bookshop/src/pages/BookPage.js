@@ -4,6 +4,8 @@ import { themeOptions } from "./Home";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../components/AuthProvider";
+import { jwtDecode } from "jwt-decode";
+import { Comment } from "../components/Article";
 
 
 
@@ -13,6 +15,9 @@ export const BookPage = () => {
     const [url] = useSearchParams();
     const [book, setBook] = useState();
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart") || "[]"));
+    const [rating, setRating] = useState([]);
+    const [newRating, setNewRating] = useState([]);
+    const [users, setUsers] = useState([]);
     const [isAdded, setIsAdded] = useState(false);
     const location = useLocation();
 
@@ -33,6 +38,73 @@ export const BookPage = () => {
             console.log(err.message);
         });
     }, []);
+
+    const getRatings = async() => {
+        if (!book) return;
+        await fetch(`http://localhost:8080/api/rating/all/${book.book_id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            setRating(data);
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+    }
+
+    useEffect(() => {
+        getRatings();
+    }, [book]);
+
+
+    useEffect((data) => {
+        const arr = rating.map(el => el.userId);
+        const tmp = [];
+        setUsers([]);
+        try {
+            fetch(`http://localhost:8080/api/user/get`, {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                },
+                body: JSON.stringify({
+                    ids:arr
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                arr.map((el, index) => setUsers(prev => [...prev,{
+                    name:data[index],
+                    id:el
+                }]));
+            });
+            console.log(data);
+        }
+        catch (error) {
+            console.error('Wysłanie nieudane. ', error.response ? error.response.data : error.message);
+        }
+    },[rating])
+
+    const sendRating = async() => {
+        try {
+            await fetch(`http://localhost:8080/api/rating/add/${book.book_id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                },
+                body: JSON.stringify({
+                    body: document.getElementById("commentText").value,
+                    rating: newRating,
+                    userId: jwtDecode(user.token).id
+                })
+            });
+            getRatings();
+        }
+        catch (error) {
+            console.error('Wysłanie nieudane. ', error.response ? error.response.data : error.message);
+        }
+    }
 
 
     const addToCart = () => {        
@@ -83,7 +155,7 @@ export const BookPage = () => {
                                     <Typography variant="h4">Data wydania:</Typography>
                                     <Typography>{book.dateOfPublication}</Typography>
                                     <Typography variant="h4">Ocena:</Typography>
-                                    <Rating value={book.rating/2} readOnly precision={0.5}></Rating>
+                                    <Rating value={book.rating} readOnly precision={0.5} max={10}></Rating>
                                 </Stack>
                             </Stack>
                         </Paper>
@@ -99,6 +171,33 @@ export const BookPage = () => {
                             </Box>
                         </Paper>
                     </Stack>
+                    <Paper sx={{margin:"15px"}}>
+                        <Typography variant="h5" sx={{margin:"10px", padding:"10px 0"}}>Oceny czytelników:</Typography>
+                            <Stack>
+                                {
+                                    user.token &&
+                                    <Stack>
+                                        <Typography variant="h5" sx={{margin:"10px"}}>Oceń:</Typography>
+                                        <Rating value={newRating} onClick={e => setNewRating(e.target.value)} max={10} sx={{margin:"10px"}}></Rating>
+                                        <textarea id="commentText" maxLength="255" placeholder="Limit znaków: 255" style={{maxWidth:"60%", maxHeight:"60px", backgroundColor:"white"}}></textarea>
+                                        <Button variant="contained" sx={{width:"10%", margin:"10px"}} onClick={sendRating}>Wyślij</Button>
+                                    </Stack>
+                                }   
+                                <Typography variant="h5" sx={{margin:"10px"}}>Komentarze:</Typography>
+                                {
+                                    rating.map(el => {
+                                        let name = users.filter(x => x.id === el.userId);
+                                        if (name.length > 0)
+                                        return ( 
+                                            <Stack>
+                                                <Rating value={el.rating} readOnly max={10} sx={{margin:"10px"}}></Rating>
+                                                <Comment author={name[0].name} body={el.body}/>
+                                            </Stack>
+                                        );
+                                    })
+                                }
+                            </Stack>
+                    </Paper>
                 </Container>
             </ThemeProvider>
     );

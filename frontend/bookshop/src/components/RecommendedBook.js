@@ -14,7 +14,7 @@ export const RecommendedBook = (props) => {
             <Typography variant="h6" display="inline" sx={{fontSize:"9px"}}>Cena: </Typography>
             <Typography variant="h6" display="inline" sx={{fontSize:"9px", color:"purple"}}>{props.price} zł</Typography>
             <Typography>
-                <Rating value={props.rating/2} readOnly precision={0.5} size="small"></Rating>
+                <Rating value={props.rating} readOnly precision={0.5} max={10} size="small" sx={{fontSize:{sm:"8px",md:"14px"}}}></Rating>
             </Typography>
             <Typography>
                 <Button variant="h5" display="flex" sx={{width: {xs:"20%", sm:"60%", md: "40%"}}} onClick={() => navigate("/offer?title=" + props.title,{state: props.author.author_id})}>SPRAWDŹ</Button>

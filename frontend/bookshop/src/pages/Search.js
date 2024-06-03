@@ -88,7 +88,7 @@ export const Search = (props) => {
                                                     <Typography align="left" sx={{fontSize:{xs:"9px", sm:"11px",md:"20px"}}}>Cena: </Typography>
                                                     <Typography align="left" sx={{fontSize:{xs:"9px", sm:"11px",md:"20px"}, color:"purple"}}>{el.price} zł</Typography>
                                                     <Typography align="left">
-                                                        <Rating value={el.rating/2} readOnly precision={0.5} sx={{fontSize:{xs:"15px", md:"27px", xl:"40px"}}}></Rating>
+                                                        <Rating value={el.rating} readOnly precision={0.5} sx={{fontSize:{xs:"15px", md:"27px", xl:"40px"}}} max={10}></Rating>
                                                     </Typography>
                                                 </Box>
                                                 <Box sx={{width:{xs:"100%" ,sm:"30%"}, justifyContent:"center", padding:"auto", margin:"7px"}}>
