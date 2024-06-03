@@ -24,7 +24,13 @@ public class NotificationService {
         String user_id = vars[2];
 
         String title = "Zmiana statusu";
-        String body = "Status twojego zamówienia został zmieniony na " + status + ".";
+        String body = switch (status) {
+            case "NEW" -> "Twoje zamówienie zostało utworzone. Dziękujemy za zakupy.";
+            case "CONFIRMED" -> "Twoje zamówienie zostało potwierdzone.";
+            case "CANCELLED" -> "Twoje zamówienie zostało anulowane.";
+            case "DELIVERED" -> "Twoje zamówienie zostało dostarczone.";
+            default -> "Status twojego zamówienia został zmieniony na " + status + ".";
+        };
 
         Notification notification = new Notification(cart_id,user_id,title,body);
         notificationRepository.save(notification);
