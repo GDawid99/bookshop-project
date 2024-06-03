@@ -1,7 +1,9 @@
 package net.bookshopproject.userservice;
 
+import net.bookshopproject.userservice.dto.UserDto;
 import net.bookshopproject.userservice.model.User;
 import net.bookshopproject.userservice.repository.UserRepository;
+import net.bookshopproject.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserserviceApplication implements CommandLineRunner {
 
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -24,19 +26,20 @@ public class UserserviceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user1 = new User(1L,"Emil","Nowak","enowak@example.com", passwordEncoder.encode("qwerty"),Role.USER.name());
-		User user2 = new User(2L,"Adam","Wójcik","adamwojcik@store.com", passwordEncoder.encode("qwerty"),Role.ADMIN.name());
-		User user3 = new User(3L,"Agata","Sikora","agasikora12@example.com", passwordEncoder.encode("12345"),Role.USER.name());
-		User user4 = new User(4L,"Marcin","Leszczyński","marcinleszcz@example.com", passwordEncoder.encode("qwerty123"),Role.USER.name());
-		User user5 = new User(5L,"Damian","Kowalski","damianok01@cos.pl", passwordEncoder.encode("wasd"),Role.USER.name());
-		User user6 = new User(6L,"Zofia","Koło","kolozofia20@example.com", passwordEncoder.encode("qwerty"),Role.USER.name());
+		UserDto user1 = new UserDto(1L,"Emil","Nowak","enowak@example.com", "qwerty",Role.ROLE_USER);
+		UserDto user2 = new UserDto(2L,"Adam","Wójcik","adamwojcik@store.com", "qwerty",Role.ROLE_ADMIN);
+		UserDto user3 = new UserDto(3L,"Agata","Sikora","agasikora12@example.com", "12345",Role.ROLE_USER);
+		UserDto user4 = new UserDto(4L,"Marcin","Leszczyński","marcinleszcz@example.com", "qwerty123",Role.ROLE_USER);
+		UserDto user5 = new UserDto(5L,"Damian","Kowalski","damianok01@cos.pl", "wasd",Role.ROLE_USER);
+		UserDto user6 = new UserDto(6L,"Zofia","Koło","kolozofia20@example.com", "qwerty",Role.ROLE_USER);
 
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
-		userRepository.save(user4);
-		userRepository.save(user5);
-		userRepository.save(user6);
+		userService.createNewUser(user1);
+		userService.createNewUser(user2);
+		userService.createNewUser(user3);
+		userService.createNewUser(user4);
+		userService.createNewUser(user5);
+		userService.createNewUser(user6);
+
 
 	}
 }

@@ -1,6 +1,7 @@
 package net.bookshopproject.userservice;
 
 public enum Role {
-    USER,
-    ADMIN;
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_MODERATOR;
 }

@@ -1,23 +1,34 @@
 package net.bookshopproject.userservice.service;
 
+import net.bookshopproject.userservice.dto.RequestUser;
 import net.bookshopproject.userservice.dto.UserDto;
 import net.bookshopproject.userservice.model.User;
 import net.bookshopproject.userservice.repository.UserRepository;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AmqpTemplate amqpTemplate;
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(this::mapFromUserToDto).toList();
@@ -26,7 +37,17 @@ public class UserService {
     public UserDto createNewUser(UserDto userDto) {
         User user = mapFromDtoToUser(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return mapFromUserToDto(userRepository.save(user));
+        UserDto dto = mapFromUserToDto(userRepository.save(user));
+        amqpTemplate.convertAndSend("article-exchange","key.user","ID:" + dto.getUser_id() + ";FIRSTNAME:" + dto.getFirstname() + ";LASTNAME:" + dto.getLastname());
+        return dto;
+    }
+
+    public List<String> getUserById(RequestUser requestUser) {
+        List<String> names = new ArrayList<>();
+        for (long l: requestUser.getIds()) {
+            names.add(userRepository.getReferenceById(l).getFirstname());
+        }
+        return names;
     }
 
     public boolean checkIfUserExist(UserDto userDto) {
@@ -65,4 +86,10 @@ public class UserService {
     }
 
 
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email).orElseThrow();
+        return UserDetailsImpl.build(user);
+    }
 }

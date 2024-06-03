@@ -1,13 +1,11 @@
 package net.bookshopproject.userservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bookshopproject.userservice.Role;
 
 @Entity
 @Getter
@@ -23,5 +21,6 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
