@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +30,22 @@ public class Book {
     private String genre;
     private String price;
     private Integer quantity;
-    private Integer rating;
+    private Float rating;
     private String imageUrl;
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private List<Rating> ratingList;
+
+    public Book(Long book_id, String title, Author author, String publisher, Date dateOfPublication, String genre, String price, Integer quantity, Float rating, String imageUrl) {
+        this.book_id = book_id;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.dateOfPublication = dateOfPublication;
+        this.genre = genre;
+        this.price = price;
+        this.quantity = quantity;
+        this.rating = rating;
+        this.imageUrl = imageUrl;
+        this.ratingList = new ArrayList<>();
+    }
 }

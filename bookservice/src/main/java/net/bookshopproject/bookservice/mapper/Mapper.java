@@ -2,8 +2,10 @@ package net.bookshopproject.bookservice.mapper;
 
 import net.bookshopproject.bookservice.dto.AuthorDto;
 import net.bookshopproject.bookservice.dto.BookDto;
+import net.bookshopproject.bookservice.dto.RatingDto;
 import net.bookshopproject.bookservice.model.Author;
 import net.bookshopproject.bookservice.model.Book;
+import net.bookshopproject.bookservice.model.Rating;
 import net.bookshopproject.bookservice.service.AuthorService;
 
 public class Mapper {
@@ -52,5 +54,25 @@ public class Mapper {
         authorDto.setLastname(author.getLastname());
         authorDto.setRating(author.getRating());
         return authorDto;
+    }
+
+    public static RatingDto mapFromRatingToDto(Rating rating) {
+        RatingDto ratingDto = new RatingDto();
+        ratingDto.setRatingId(rating.getRatingId());
+        ratingDto.setBook(Mapper.mapFromBookToDto(rating.getBook()));
+        ratingDto.setUserId(rating.getUserId());
+        ratingDto.setBody(rating.getBody());
+        ratingDto.setRating(rating.getRating());
+        return ratingDto;
+    }
+
+    public static Rating mapFromDtoToRating(RatingDto ratingDto) {
+        Rating rating = new Rating();
+        rating.setRatingId(ratingDto.getRatingId());
+        rating.setBook(Mapper.mapFromDtoToBook(ratingDto.getBook()));
+        rating.setUserId(ratingDto.getUserId());
+        rating.setBody(ratingDto.getBody());
+        rating.setRating(ratingDto.getRating());
+        return rating;
     }
 }

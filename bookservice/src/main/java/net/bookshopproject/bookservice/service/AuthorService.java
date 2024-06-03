@@ -49,4 +49,9 @@ public class AuthorService {
         }
         else return "Autor " + id + " nie został usunięty. Powód: powiązanie z inną tabelą bądź inne.";
     }
+
+    public String findAuthorByName(AuthorDto authorDto) {
+        Author author = authorRepository.findByFirstnameAndLastname(authorDto.getFirstname(),authorDto.getLastname());
+        return String.valueOf(author.getAuthor_id());
+    }
 }

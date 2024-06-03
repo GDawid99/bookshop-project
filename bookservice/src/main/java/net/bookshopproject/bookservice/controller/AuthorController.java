@@ -18,6 +18,11 @@ public class AuthorController {
         return ResponseEntity.ok(authorService.addNewAuthor(authorDto));
     }
 
+    @PostMapping("/get")
+    public ResponseEntity<String> getAuthor(@RequestBody AuthorDto authorDto) {
+        return ResponseEntity.ok(authorService.findAuthorByName(authorDto));
+    }
+
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<String> deleteAuthorById(@PathVariable long id) {
